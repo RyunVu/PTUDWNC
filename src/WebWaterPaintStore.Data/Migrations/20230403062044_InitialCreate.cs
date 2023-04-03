@@ -37,6 +37,7 @@ namespace WebWaterPaintStore.Data.Migrations
                     ShipDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     ShipName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ShipAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ShipTel = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
@@ -56,13 +57,8 @@ namespace WebWaterPaintStore.Data.Migrations
                     ShortDescription = table.Column<string>(type: "nvarchar(max)", maxLength: 5120, nullable: false),
                     Meta = table.Column<string>(type: "nvarchar(1280)", maxLength: 1280, nullable: false),
                     UrlSlug = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Unit = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    Quantity = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
-                    Discount = table.Column<float>(type: "real", nullable: false, defaultValue: 0f),
                     Actived = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
-                    SoldCount = table.Column<int>(type: "int", maxLength: 0, nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -103,6 +99,30 @@ namespace WebWaterPaintStore.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UnitDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UnitTag = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    Quantity = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    Discount = table.Column<float>(type: "real", nullable: false, defaultValue: 0f),
+                    SoldCount = table.Column<int>(type: "int", maxLength: 0, nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UnitDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_UnitDetails",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_ProductId",
                 table: "OrderDetails",
@@ -112,6 +132,11 @@ namespace WebWaterPaintStore.Data.Migrations
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UnitDetails_ProductId",
+                table: "UnitDetails",
+                column: "ProductId");
         }
 
         /// <inheritdoc />
@@ -119,6 +144,9 @@ namespace WebWaterPaintStore.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "OrderDetails");
+
+            migrationBuilder.DropTable(
+                name: "UnitDetails");
 
             migrationBuilder.DropTable(
                 name: "Orders");

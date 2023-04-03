@@ -28,6 +28,9 @@ namespace WebWaterPaintStore.Core.Entities
         // Địa chỉ giao hàng
         public string ShipAddress { get; set; }
 
+        // Email người nhận
+        public string Email { get; set; }
+
         // Số điện thoại của người nhận hàng
         public string ShipTel { get; set; }
 

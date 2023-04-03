@@ -27,6 +27,10 @@ namespace WebWaterPaintStore.Data.Mappings
                 .IsRequired()
                 .HasMaxLength(256);
 
+            builder.Property(a => a.Email)
+              .IsRequired()
+              .HasMaxLength(128);
+
             builder.Property(a => a.ShipTel)
                 .IsRequired()
                 .HasMaxLength(12);

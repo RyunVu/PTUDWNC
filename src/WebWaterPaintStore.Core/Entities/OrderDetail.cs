@@ -18,7 +18,7 @@ namespace WebWaterPaintStore.Core.Entities
         public int Total {
             get
             {
-                return (int)Math.Round(Price * Quantity * (1 - Discount), 0);
+                return (int)Math.Round(Price * Quantity * (1 - Discount*0.01), 0);
             }
                 
         }
