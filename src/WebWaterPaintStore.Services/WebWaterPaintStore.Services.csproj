@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebWaterPaintStore.Core\WebWaterPaintStore.Core.csproj" />
+    <ProjectReference Include="..\WebWaterPaintStore.Data\WebWaterPaintStore.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Media\" />
+    <Folder Include="Rss\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="WaterPaints\" />
+  </ItemGroup>
+
+</Project>
