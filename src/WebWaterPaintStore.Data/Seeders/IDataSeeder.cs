@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace WebWaterPaintStore.Data.Seeders
 {
-    public interface IDataSeeder{
+    public interface IDataSeeder
+    {
         void Initialize();
     }
 }

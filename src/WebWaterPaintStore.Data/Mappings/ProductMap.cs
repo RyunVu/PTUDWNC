@@ -28,21 +28,6 @@ namespace WebWaterPaintStore.Data.Mappings
                 .IsRequired()
                 .HasMaxLength(256);
 
-            builder.Property(s => s.Unit)
-                .IsRequired()
-                .HasMaxLength(512);
-
-            builder.Property(s => s.Price)
-                .IsRequired()
-                .HasDefaultValue(0);
-
-            builder.Property(s => s.Quantity)
-                .IsRequired()
-                .HasDefaultValue(0);
-
-            builder.Property(s => s.Discount)
-                .HasDefaultValue(0);
-
             builder.Property(p => p.Actived)
                 .IsRequired()
                 .HasDefaultValue(false);
@@ -50,9 +35,6 @@ namespace WebWaterPaintStore.Data.Mappings
             builder.Property(s => s.ImageUrl)
                 .IsRequired()
                 .HasMaxLength(512);
-
-            builder.Property(s => s.SoldCount)
-               .HasMaxLength(0);
 
             builder.HasOne(p => p.Category)
                 .WithMany(c => c.Products)
@@ -64,6 +46,12 @@ namespace WebWaterPaintStore.Data.Mappings
                 .WithOne(d => d.Product)
                 .HasForeignKey(d => d.ProductId)
                 .HasConstraintName("FK_Products_OrderDetails")
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(s => s.UnitDetails)
+                .WithOne(p => p.Product)
+                .HasForeignKey(s => s.ProductId)
+                .HasConstraintName("FK_Products_UnitDetails")
                 .OnDelete(DeleteBehavior.Cascade);
 
         }

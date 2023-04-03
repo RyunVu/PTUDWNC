@@ -12,23 +12,12 @@ namespace WebWaterPaintStore.Core.Entities
         // Mô tả về sản phẩm
         public string ShortDescription { get; set; }
 
-        // Metadata (làm đến lab5 sẽ hiểu)
+        // Metadata 
         public string Meta { get; set; }
 
         // Tên định danh 
         public string UrlSlug { get; set;}
 
-        // Đơn vị tính
-        public string Unit { get; set; }
-
-        // Giá
-        public int Price { get; set; }
-
-        // Số lượng tồn
-        public int Quantity { get; set; }
-
-        // % giảm giá
-        public float Discount { get; set; }
 
         // Hiển thị trên menu
         public bool Actived { get; set; }
@@ -36,11 +25,10 @@ namespace WebWaterPaintStore.Core.Entities
         // Ảnh sản phẩm
         public string ImageUrl { get; set; }
 
-        // Số lượng đã bán
-        public int SoldCount { get; set; }
 
         // Loại của sản phẩm
         public int CategoryId { get; set; }
+
 
         // Properties
 
@@ -48,6 +36,10 @@ namespace WebWaterPaintStore.Core.Entities
         public Category Category { get;set; }
 
         // Chi tiết hóa đơn
-        public IList<OrderDetail> OrderDetails { get; set; }
+        public virtual IList<OrderDetail> OrderDetails { get; set; }
+
+        public IList<UnitDetail> UnitDetails { get; set; }
     }
+
+    
 }

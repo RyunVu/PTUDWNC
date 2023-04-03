@@ -62,6 +62,11 @@ namespace WebWaterPaintStore.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
                     b.Property<string>("Notes")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -136,11 +141,6 @@ namespace WebWaterPaintStore.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<float>("Discount")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("real")
-                        .HasDefaultValue(0f);
-
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasMaxLength(512)
@@ -156,29 +156,10 @@ namespace WebWaterPaintStore.Data.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<int>("Price")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.Property<int>("Quantity")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .HasMaxLength(5120)
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SoldCount")
-                        .HasMaxLength(0)
-                        .HasColumnType("int");
-
-                    b.Property<string>("Unit")
-                        .IsRequired()
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("UrlSlug")
                         .IsRequired()
@@ -190,6 +171,48 @@ namespace WebWaterPaintStore.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products", (string)null);
+                });
+
+            modelBuilder.Entity("WebWaterPaintStore.Core.Entities.UnitDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float>("Discount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("real")
+                        .HasDefaultValue(0f);
+
+                    b.Property<int>("Price")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("SoldCount")
+                        .HasMaxLength(0)
+                        .HasColumnType("int");
+
+                    b.Property<string>("UnitTag")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("UnitDetails", (string)null);
                 });
 
             modelBuilder.Entity("WebWaterPaintStore.Core.Entities.OrderDetail", b =>
@@ -225,6 +248,18 @@ namespace WebWaterPaintStore.Data.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("WebWaterPaintStore.Core.Entities.UnitDetail", b =>
+                {
+                    b.HasOne("WebWaterPaintStore.Core.Entities.Product", "Product")
+                        .WithMany("UnitDetails")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Products_UnitDetails");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("WebWaterPaintStore.Core.Entities.Category", b =>
                 {
                     b.Navigation("Products");
@@ -238,6 +273,8 @@ namespace WebWaterPaintStore.Data.Migrations
             modelBuilder.Entity("WebWaterPaintStore.Core.Entities.Product", b =>
                 {
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("UnitDetails");
                 });
 #pragma warning restore 612, 618
         }
