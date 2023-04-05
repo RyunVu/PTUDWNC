@@ -16,9 +16,6 @@ namespace WebWaterPaintStore.Data.Mappings
                 .IsRequired()
                 .HasColumnType("datetime");
 
-            builder.Property(a => a.ShipDate)
-               .HasColumnType("datetime");
-
             builder.Property(a => a.ShipName)
                 .IsRequired()
                 .HasMaxLength(128);

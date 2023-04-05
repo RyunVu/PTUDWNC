@@ -10,8 +10,8 @@ using WebWaterPaintStore.Data.Contexts;
 
 namespace WebWaterPaintStore.Data.Migrations
 {
-    [DbContext(typeof(ShopDbContext))]
-    partial class ShopDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(StoreDbContext))]
+    partial class StoreDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -80,9 +80,6 @@ namespace WebWaterPaintStore.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<DateTime?>("ShipDate")
-                        .HasColumnType("datetime");
-
                     b.Property<string>("ShipName")
                         .IsRequired()
                         .HasMaxLength(128)
@@ -140,6 +137,9 @@ namespace WebWaterPaintStore.Data.Migrations
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()

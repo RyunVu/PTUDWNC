@@ -18,6 +18,8 @@ namespace WebWaterPaintStore.Core.Entities
         // Tên định danh 
         public string UrlSlug { get; set;}
 
+        public DateTime CreatedDate { get; set; }
+
 
         // Hiển thị trên menu
         public bool Actived { get; set; }

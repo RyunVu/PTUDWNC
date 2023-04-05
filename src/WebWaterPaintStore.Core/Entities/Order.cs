@@ -17,10 +17,7 @@ namespace WebWaterPaintStore.Core.Entities
         public int Id { get; set; }
 
         // Ngày đặt hàng
-        public DateTime? OrderDate { get; set; }
-
-        // Ngày giao
-        public DateTime? ShipDate { get; set; }        
+        public DateTime? OrderDate { get; set; }   
 
         // Tên người nhận hàng
         public string ShipName { get; set; }

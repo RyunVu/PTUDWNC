@@ -1,10 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebWaterPaintStore.Core.Entities;
+﻿using WebWaterPaintStore.Core.Entities;
 using WebWaterPaintStore.Data.Contexts;
 
 namespace WebWaterPaintStore.Data.Seeders
@@ -12,9 +6,9 @@ namespace WebWaterPaintStore.Data.Seeders
     public class DataSeeder : IDataSeeder
     {
 
-        private readonly ShopDbContext _dbContext;
+        private readonly StoreDbContext _dbContext;
 
-        public DataSeeder(ShopDbContext dbContext)
+        public DataSeeder(StoreDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -60,7 +54,6 @@ namespace WebWaterPaintStore.Data.Seeders
                 Email = "2014508@gmail.com",
                 ShipName = "NT Vũ",
                 OrderDate = DateTime.Now,
-                ShipDate = DateTime.Now.AddDays(7),
                 ShipAddress = "DLU",
                 ShipTel = "012345678",
                 Status = OrderStatus.New
@@ -70,7 +63,6 @@ namespace WebWaterPaintStore.Data.Seeders
                 Email = "2014508@gmail.com",
                 ShipName = "NT Vũ",
                 OrderDate = DateTime.Now,
-                ShipDate = DateTime.Now.AddDays(7),
                 ShipAddress = "DLU",
                 ShipTel = "012345678",
                 Status = OrderStatus.New,
@@ -112,6 +104,7 @@ namespace WebWaterPaintStore.Data.Seeders
                 Category = categories[0],
                 Actived = true,
                 ImageUrl = "",
+                CreatedDate = DateTime.Now,
             },
             new ()
             {
@@ -122,6 +115,7 @@ namespace WebWaterPaintStore.Data.Seeders
                 Category = categories[1],
                 Actived = true,
                 ImageUrl = "",
+                CreatedDate = DateTime.Now,
             },
             new ()
             {
@@ -132,6 +126,7 @@ namespace WebWaterPaintStore.Data.Seeders
                 Category = categories[2],
                 Actived = true,
                 ImageUrl = "",
+                CreatedDate = DateTime.Now,
             },
                 new ()
             {
@@ -142,6 +137,7 @@ namespace WebWaterPaintStore.Data.Seeders
                 Category = categories[2],
                 Actived = true,
                 ImageUrl = "",
+                CreatedDate = DateTime.Now,
             },
             new ()
             {
@@ -152,6 +148,7 @@ namespace WebWaterPaintStore.Data.Seeders
                 Category = categories[3],
                 Actived = true,
                 ImageUrl = "",
+                CreatedDate = DateTime.Now,
             },
             
         };
