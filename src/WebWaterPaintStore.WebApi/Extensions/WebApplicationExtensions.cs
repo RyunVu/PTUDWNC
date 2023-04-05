@@ -21,7 +21,7 @@ namespace TatBlog.WebApi.Extensions {
         public static WebApplicationBuilder ConfigureCors(
             this WebApplicationBuilder builder) {
             builder.Services.AddCors(options => {
-                options.AddPolicy("TatBlogApp", policyBuilder =>
+                options.AddPolicy("WebStoreApp", policyBuilder =>
                     policyBuilder
                         .AllowAnyOrigin()
                         .AllowAnyHeader()
