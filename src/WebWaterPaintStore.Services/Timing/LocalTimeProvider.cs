@@ -1,4 +1,4 @@
-﻿namespace TatBlog.Services.Timing;
+﻿namespace WebWaterPaintStore.Services.Timing;
 
 public class LocalTimeProvider : ITimeProvider
 {

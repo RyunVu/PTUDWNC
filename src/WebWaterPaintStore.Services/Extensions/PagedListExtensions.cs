@@ -1,31 +1,35 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq.Dynamic.Core;
-using TatBlog.Core.Collections;
-using TatBlog.Core.Contracts;
+﻿using System.Linq.Dynamic.Core;
+using Microsoft.EntityFrameworkCore;
+using WebWaterPaintStore.Core.Collections;
+using WebWaterPaintStore.Core.Contracts;
 
-namespace TatBlog.Services.Extensions {
-    public static class PagedListExtensions {
-        
+namespace WebWaterPaintStore.Services.Extensions
+{
+    public static class PagedListExtensions
+    {
+
         // Tạo biểu thức dùng để sắp xép dữ liệu
         // Sử dụng sau mệnh đề ORDER BY trong truy vấn
-        public static string GetOrderExpression (
+        public static string GetOrderExpression(
             this IPagingParams pagingParams,
-            string defaultColumn = "Id") {
+            string defaultColumn = "Id")
+        {
 
-                var column = string.IsNullOrWhiteSpace(pagingParams.SortColumn)
-                    ? defaultColumn : pagingParams.SortColumn;
+            var column = string.IsNullOrWhiteSpace(pagingParams.SortColumn)
+                ? defaultColumn : pagingParams.SortColumn;
 
-                var order = "ASC".Equals(
-                    pagingParams.SortOrder, StringComparison.OrdinalIgnoreCase)
-                    ? pagingParams.SortOrder : "DESC";
+            var order = "ASC".Equals(
+                pagingParams.SortOrder, StringComparison.OrdinalIgnoreCase)
+                ? pagingParams.SortOrder : "DESC";
 
-                return $"{column} {order}";
+            return $"{column} {order}";
         }
 
         public static async Task<IPagedList<T>> ToPagedListAsync<T>(
             this IQueryable<T> source,
             IPagingParams pagingParams,
-            CancellationToken cancellationToken = default) {
+            CancellationToken cancellationToken = default)
+        {
 
             var totalCount = await source.CountAsync(cancellationToken);
             var items = await source
@@ -47,7 +51,8 @@ namespace TatBlog.Services.Extensions {
             int pageSize = 10,
             string sortColumn = "Id",
             string sortOrder = "DESC",
-            CancellationToken cancellationToken = default) {
+            CancellationToken cancellationToken = default)
+        {
 
             var totalCount = await source.CountAsync(cancellationToken);
             var items = await source

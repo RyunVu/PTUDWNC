@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace TatBlog.Services.Extensions;
+namespace WebWaterPaintStore.Services.Extensions;
 
 public static class QueryableExtensions {
     /// <summary>
