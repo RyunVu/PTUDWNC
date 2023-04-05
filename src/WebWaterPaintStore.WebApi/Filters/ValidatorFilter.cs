@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using TatBlog.WebApi.Extensions;
-using TatBlog.WebApi.Models;
+using WebWaterPaintStore.WebApi.Extensions;
+using WebWaterPaintStore.WebApi.Models;
 
-namespace TatBlog.WebApi.Filters {
+namespace WebWaterPaintStore.WebApi.Filters {
     public class ValidatorFilter<T> : IEndpointFilter where T : class {
 
         private readonly IValidator<T> _validator;

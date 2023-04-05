@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -22,6 +22,10 @@
     <ProjectReference Include="..\WebWaterPaintStore.Core\WebWaterPaintStore.Core.csproj" />
     <ProjectReference Include="..\WebWaterPaintStore.Data\WebWaterPaintStore.Data.csproj" />
     <ProjectReference Include="..\WebWaterPaintStore.Services\WebWaterPaintStore.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\pictures\" />
   </ItemGroup>
 
 </Project>

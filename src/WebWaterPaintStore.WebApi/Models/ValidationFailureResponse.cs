@@ -1,4 +1,4 @@
-﻿namespace TatBlog.WebApi.Models {
+﻿namespace WebWaterPaintStore.WebApi.Models {
     public class ValidationFailureResponse {
         public IEnumerable<string> Errors { get; set; }
 
