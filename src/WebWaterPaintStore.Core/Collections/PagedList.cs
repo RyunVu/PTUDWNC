@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using TatBlog.Core.Contracts;
+using WebWaterPaintStore.Core.Contracts;
 
-namespace TatBlog.Core.Collections;
+namespace WebWaterPaintStore.Core.Collections;
 
 public class PagedList<T> : PagingMetadata, IPagedList<T>
 {

@@ -1,6 +1,6 @@
-﻿using TatBlog.Core.Contracts;
+﻿using WebWaterPaintStore.Core.Contracts;
 
-namespace TatBlog.Core.Collections {
+namespace WebWaterPaintStore.Core.Collections {
     public class PagingParams : IPagingParams {
         public int PageSize { get; set; }
         public int PageNumber { get; set; }

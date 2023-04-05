@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebWaterPaintStore.Core.Contracts;
+﻿using WebWaterPaintStore.Core.Contracts;
 
 namespace WebWaterPaintStore.Core.Collections
 {
