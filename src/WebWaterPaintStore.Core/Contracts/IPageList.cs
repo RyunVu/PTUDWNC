@@ -1,4 +1,4 @@
-﻿namespace TatBlog.Core.Contracts {
+﻿namespace WebWaterPaintStore.Core.Contracts {
     public interface IPagedList {
         // Tổng số trang
         int PageCount { get; }

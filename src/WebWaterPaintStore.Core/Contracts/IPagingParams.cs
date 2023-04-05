@@ -1,4 +1,4 @@
-﻿namespace TatBlog.Core.Contracts {
+﻿namespace WebWaterPaintStore.Core.Contracts {
     public interface IPagingParams {
         // Số mẫu tin trên một trang
         int PageSize { get; set; }
