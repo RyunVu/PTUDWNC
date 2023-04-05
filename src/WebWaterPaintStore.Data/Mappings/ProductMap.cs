@@ -32,6 +32,9 @@ namespace WebWaterPaintStore.Data.Mappings
                 .IsRequired()
                 .HasDefaultValue(false);
 
+            builder.Property(o => o.CreatedDate)
+            .HasColumnType("datetime");
+
             builder.Property(s => s.ImageUrl)
                 .IsRequired()
                 .HasMaxLength(512);
