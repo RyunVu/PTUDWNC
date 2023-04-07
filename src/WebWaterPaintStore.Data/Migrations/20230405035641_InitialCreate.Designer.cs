@@ -11,8 +11,8 @@ using WebWaterPaintStore.Data.Contexts;
 
 namespace WebWaterPaintStore.Data.Migrations
 {
-    [DbContext(typeof(ShopDbContext))]
-    [Migration("20230403062044_InitialCreate")]
+    [DbContext(typeof(StoreDbContext))]
+    [Migration("20230405035641_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -83,9 +83,6 @@ namespace WebWaterPaintStore.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<DateTime?>("ShipDate")
-                        .HasColumnType("datetime");
-
                     b.Property<string>("ShipName")
                         .IsRequired()
                         .HasMaxLength(128)
@@ -143,6 +140,9 @@ namespace WebWaterPaintStore.Data.Migrations
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()

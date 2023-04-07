@@ -2,17 +2,24 @@
 using NLog.Web;
 using WebWaterPaintStore.Data.Contexts;
 using WebWaterPaintStore.Data.Seeders;
+using WebWaterPaintStore.Services.Timing;
+using WebWaterPaintStore.Services.WaterPaints;
+using WebWaterPaintStore.WebApi.Media;
 
-namespace TatBlog.WebApi.Extensions {
+namespace WebWaterPaintStore.WebApi.Extensions {
     public static class WebApplicationExtensions {
         public static WebApplicationBuilder ConfigureServices(
             this WebApplicationBuilder builder) {
 
             builder.Services.AddMemoryCache();
 
-            builder.Services.AddDbContext<ShopDbContext>(options =>
+            builder.Services.AddDbContext<StoreDbContext>(options =>
             options.UseSqlServer(
                 builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<ITimeProvider, LocalTimeProvider>();
+            builder.Services.AddScoped<IMediaManager, LocalFileSystemMediaManager>();
+            builder.Services.AddScoped<IStoreRepository, StoreRepository>();
 
 
             return builder;
@@ -21,7 +28,7 @@ namespace TatBlog.WebApi.Extensions {
         public static WebApplicationBuilder ConfigureCors(
             this WebApplicationBuilder builder) {
             builder.Services.AddCors(options => {
-                options.AddPolicy("TatBlogApp", policyBuilder =>
+                options.AddPolicy("WebStoreApp", policyBuilder =>
                     policyBuilder
                         .AllowAnyOrigin()
                         .AllowAnyHeader()
@@ -80,7 +87,7 @@ namespace TatBlog.WebApi.Extensions {
             app.UseStaticFiles();
             app.UseHttpsRedirection();
 
-            app.UseCors("TatBlogApp");
+            app.UseCors("WebStoreApp");
 
             return app;
         }

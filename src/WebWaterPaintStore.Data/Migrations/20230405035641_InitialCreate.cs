@@ -34,7 +34,6 @@ namespace WebWaterPaintStore.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    ShipDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     ShipName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ShipAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
@@ -57,6 +56,7 @@ namespace WebWaterPaintStore.Data.Migrations
                     ShortDescription = table.Column<string>(type: "nvarchar(max)", maxLength: 5120, nullable: false),
                     Meta = table.Column<string>(type: "nvarchar(1280)", maxLength: 1280, nullable: false),
                     UrlSlug = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     Actived = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
