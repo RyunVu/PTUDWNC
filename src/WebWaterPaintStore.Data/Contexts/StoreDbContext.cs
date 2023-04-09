@@ -19,11 +19,6 @@ namespace WebWaterPaintStore.Data.Contexts
 
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(@"Server=DESKTOP-7NPFO5S;Database=WaterPaintStore;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
-        //}
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CategoryMap).Assembly);

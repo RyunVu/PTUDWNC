@@ -16,8 +16,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 {
-    app.UseDataSeeder();
     app.SetupRequestPipeline();
+
+    app.UseDataSeeder();
 
     if (app.Environment.IsDevelopment())
     {
@@ -26,11 +27,13 @@ var app = builder.Build();
     }
 
     app.UseStaticFiles();
+
     app.UseHttpsRedirection();
 
     app.UseCors("WebStoreApp");
 
     app.MapProductEndpoints();
+    app.MapAccountEndPoints();
 
 
     app.Run();

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WebWaterPaintStore.Data.Seeders
+﻿namespace WebWaterPaintStore.Data.Seeders
 {
     public interface IDataSeeder
     {
