@@ -1,5 +1,8 @@
 ﻿using WebWaterPaintStore.Core.Entities;
+using WebWaterPaintStore.Core.Identity;
 using WebWaterPaintStore.Data.Contexts;
+using System.Collections.Generic;
+
 
 namespace WebWaterPaintStore.Data.Seeders
 {
@@ -7,10 +10,12 @@ namespace WebWaterPaintStore.Data.Seeders
     {
 
         private readonly StoreDbContext _dbContext;
+        private readonly IPasswordHasher _hasher;
 
-        public DataSeeder(StoreDbContext dbContext)
+        public DataSeeder(StoreDbContext dbContext, IPasswordHasher hasher)
         {
             _dbContext = dbContext;
+            _hasher = hasher;
         }
 
         public void Initialize()
@@ -26,7 +31,51 @@ namespace WebWaterPaintStore.Data.Seeders
             var products = AddProduct(categories);
             var units = AddUnit(products);
             var orders = AddOrder(products);
+
+            var roles = AddRoles();
+            var users = AddUsers(roles);
+
         }
+        private IList<Role> AddRoles()
+        {
+            var roles = new List<Role>()
+        {
+            new() {Name = "Admin"},
+            new() {Name = "Manager"},
+            new() {Name = "Customer"},
+        };
+
+            _dbContext.Roles.AddRange(roles);
+            _dbContext.SaveChanges();
+            return roles;
+        }
+
+        private IList<User> AddUsers(IList<Role> roles)
+        {
+            var users = new List<User>()
+        {
+            new User()
+            {
+                Name = "Admin",
+                Email = "Admin@gmail.com",
+                Address = "DLU",
+                Phone = "0123456789",
+                Username = "admin",
+                Password = _hasher.Hash("admin#123"),
+                Roles = new List<Role>()
+                {
+                    roles[0],
+                    roles[1]
+                }
+            }
+        };
+
+            _dbContext.Users.AddRange(users);
+            _dbContext.SaveChanges();
+
+            return users;
+        }
+
 
         private IList<Category> AddCategories()
         {

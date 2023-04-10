@@ -1,5 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using NLog.Web;
+using System.Security.Claims;
+using System.Text;
+using WebWaterPaintStore.Core.Identity;
 using WebWaterPaintStore.Data.Contexts;
 using WebWaterPaintStore.Data.Seeders;
 using WebWaterPaintStore.Services.Timing;
@@ -13,13 +18,39 @@ namespace WebWaterPaintStore.WebApi.Extensions {
 
             builder.Services.AddMemoryCache();
 
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(option =>
+                option.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(
+                            builder.Configuration["Jwt:Key"]))
+                });
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole(ClaimTypes.Role, "Admin"));
+                options.AddPolicy("RequireManagerRole", policy => policy.RequireRole(ClaimTypes.Role, "Manager"));
+            });
+
+
             builder.Services.AddDbContext<StoreDbContext>(options =>
             options.UseSqlServer(
                 builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddScoped<IDataSeeder, DataSeeder>();
             builder.Services.AddScoped<ITimeProvider, LocalTimeProvider>();
             builder.Services.AddScoped<IMediaManager, LocalFileSystemMediaManager>();
             builder.Services.AddScoped<IStoreRepository, StoreRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IPasswordHasher, PasswordHasher>(); 
 
 
             return builder;
@@ -87,9 +118,13 @@ namespace WebWaterPaintStore.WebApi.Extensions {
             app.UseStaticFiles();
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseCors("WebStoreApp");
 
             return app;
         }
+
     }
 }
