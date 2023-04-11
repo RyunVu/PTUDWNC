@@ -6,22 +6,52 @@ namespace WebWaterPaintStore.Services.WaterPaints
 {
     public interface IStoreRepository 
     {
-        Task<Product> GetProductByIdAsync(
+        #region Product
+            Task<Product> GetProductByIdAsync(
+                int id,
+                CancellationToken cancellationToken = default);
+
+            Task<Product> GetProductBySlugAsync(string slug,
+                CancellationToken cancellationToken = default);
+
+            Task<IPagedList<Product>> GetPagedProductQueryAsync(
+                IProductQuery productQuery,
+                IPagingParams pagingParams,
+                CancellationToken cancellationToken = default);
+
+            Task<IPagedList<T>> GetPagedProductsAsync<T>(
+                IProductQuery productQuery,
+                IPagingParams pagingParams,
+                Func<IQueryable<Product>, IQueryable<T>> mapper);
+
+        #endregion
+
+        #region Category
+
+        Task<Category> GetCategoryByIdAsync(
             int id,
             CancellationToken cancellationToken = default);
 
-        Task<Product> GetProductBySlugAsync(string slug,
+        Task<Category> GetCategoryBySlugAsync(string slug,
             CancellationToken cancellationToken = default);
 
-        Task<IPagedList<Product>> GetPagedProductsAsync(
-            IProductQuery productQuery,
+        Task<IPagedList<CategoryItem>> GetPagedCategoryQueryAsync(
+            ICategoryQuery cateQuery,
             IPagingParams pagingParams,
+            CancellationToken cancellationToken);
+
+        Task<IPagedList<CategoryItem>> GetPagedCategoriesAsync(
+            IPagingParams pagingParams,
+            string name = null,
             CancellationToken cancellationToken = default);
 
-        Task<IPagedList<T>> GetPagedProductsAsync<T>(
-            IProductQuery productQuery,
+        Task<IPagedList<T>> GetPagedCategoriesAsync<T>(
+            Func<IQueryable<Category>, IQueryable<T>> mapper,
             IPagingParams pagingParams,
-            Func<IQueryable<Product>, IQueryable<T>> mapper);
+            string keyword = null,
+            CancellationToken cancellationToken = default);
+
+        #endregion
 
     }
 }
