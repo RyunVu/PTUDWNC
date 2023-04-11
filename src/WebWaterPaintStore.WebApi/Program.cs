@@ -34,6 +34,7 @@ var app = builder.Build();
 
     app.MapProductEndpoints();
     app.MapAccountEndPoints();
+    app.MapCategoryEndpoints();
 
 
     app.Run();

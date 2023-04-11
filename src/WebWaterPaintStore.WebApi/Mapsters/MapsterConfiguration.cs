@@ -3,7 +3,8 @@ using WebWaterPaintStore.Core.DTO;
 using WebWaterPaintStore.Core.Entities;
 using WebWaterPaintStore.WebApi.Models;
 
-namespace WebWaterPaintStore.WebApi.Mapsters {
+namespace WebWaterPaintStore.WebApi.Mapsters
+{
     public class MapsterConfiguration : IRegister{
     
         public void Register(TypeAdapterConfig config) {
