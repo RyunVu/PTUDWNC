@@ -20,6 +20,8 @@ namespace WebWaterPaintStore.WebApi.Endpoints
             routeGroupBuilder.MapPost("/Register", Register)
                 .WithName("Register");
 
+            
+
             return app;
         }
 

@@ -8,7 +8,7 @@ namespace WebWaterPaintStore.WebApi.Models
         public string ShortDescription { get; set; }
         public string Meta { get; set; }
         public string UrlSlug { get; set; }
-        
+
         public int CategoryId { get; set; }
         public IList<UnitDetail> ProductUnitDetails { get; set; }
 
