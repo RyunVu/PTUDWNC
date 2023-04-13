@@ -211,14 +211,14 @@ namespace WebWaterPaintStore.Data.Seeders
         {
             var unit = new List<UnitDetail>()
         {
-            new() {UnitTag = "4kg", Price = 900000, Quantity = 20, Discount = 0, SoldCount = 22, ProductId = Products[0].Id},
-            new() {UnitTag = "20kg", Price = 4500000, Quantity = 4, Discount = 0, SoldCount = 27, ProductId = Products[0].Id},
-            new() {UnitTag = "4kg", Price = 1300000, Quantity = 25, Discount = 20, SoldCount = 25, ProductId = Products[1].Id},
-            new() {UnitTag = "20kg", Price = 6000000, Quantity = 34, Discount = 0, SoldCount = 12, ProductId = Products[1].Id},
-            new() {UnitTag = "4kg", Price = 1000000, Quantity = 40, Discount = 50, SoldCount = 24, ProductId = Products[2].Id},
-            new() {UnitTag = "10kg", Price = 2800000, Quantity = 20, Discount = 30, SoldCount = 32, ProductId = Products[2].Id},
-            new() {UnitTag = "4kg", Price = 950000, Quantity = 30, Discount = 20, SoldCount = 14, ProductId = Products[3].Id},
-            new() {UnitTag = "5kg", Price = 400000, Quantity = 20, Discount = 0, SoldCount = 2, ProductId = Products[4].Id},
+            new() {UnitTag = "4kg", Price = 900000, Quantity = 20, Discount = 0, SoldCount = 22, ProductId = Products[0].Id, Actived = true},
+            new() {UnitTag = "20kg", Price = 4500000, Quantity = 4, Discount = 0, SoldCount = 27, ProductId = Products[0].Id, Actived = true},
+            new() {UnitTag = "4kg", Price = 1300000, Quantity = 25, Discount = 20, SoldCount = 25, ProductId = Products[1].Id, Actived = true},
+            new() {UnitTag = "20kg", Price = 6000000, Quantity = 34, Discount = 0, SoldCount = 12, ProductId = Products[1].Id, Actived = true},
+            new() {UnitTag = "4kg", Price = 1000000, Quantity = 40, Discount = 50, SoldCount = 24, ProductId = Products[2].Id, Actived = true},
+            new() {UnitTag = "10kg", Price = 2800000, Quantity = 20, Discount = 30, SoldCount = 32, ProductId = Products[2].Id, Actived = true},
+            new() {UnitTag = "4kg", Price = 950000, Quantity = 30, Discount = 20, SoldCount = 14, ProductId = Products[3].Id, Actived = true},
+            new() {UnitTag = "5kg", Price = 400000, Quantity = 20, Discount = 0, SoldCount = 2, ProductId = Products[4].Id, Actived = true},
         };
 
             _dbContext.UnitDetails.AddRange(unit);
