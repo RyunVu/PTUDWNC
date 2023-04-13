@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography.X509Certificates;
+﻿using Azure;
+using Microsoft.EntityFrameworkCore;
+using SlugGenerator;
+using WebWaterPaintStore.Core.Collections;
 using WebWaterPaintStore.Core.Contracts;
 using WebWaterPaintStore.Core.DTO;
 using WebWaterPaintStore.Core.Entities;
@@ -37,11 +39,13 @@ namespace WebWaterPaintStore.Services.WaterPaints
         {
             var products = _dbContext.Set<Product>()
                 .Include(s => s.Category)
+                .Include(u => u.UnitDetails)
                 .WhereIf(productQuery.Year > 0, s => s.CreatedDate.Year == productQuery.Year)
                 .WhereIf(productQuery.Month > 0, s => s.CreatedDate.Month == productQuery.Month)
                 .WhereIf(productQuery.Day > 0, s => s.CreatedDate.Day == productQuery.Day)
                 .WhereIf(!string.IsNullOrEmpty(productQuery.CategorySlug), s => s.Category.UrlSlug.Contains(productQuery.CategorySlug))
                 .WhereIf(!string.IsNullOrEmpty(productQuery.ProductSlug), s => s.UrlSlug.Contains(productQuery.ProductSlug))
+                .WhereIf(!string.IsNullOrWhiteSpace(productQuery.UnitTag), p => p.UnitDetails.Any(t => t.UnitTag == productQuery.UnitTag))
                 .WhereIf(!string.IsNullOrEmpty(productQuery.Keyword), s =>
                     s.Name.Contains(productQuery.Keyword) ||
                     s.ShortDescription.Contains(productQuery.Keyword) ||
@@ -62,6 +66,46 @@ namespace WebWaterPaintStore.Services.WaterPaints
             return await projectedProducts.ToPagedListAsync(pagingParams);
         }
 
+        public async Task ToggleActivedStatusAsync(int id, CancellationToken cancellationToken = default)
+        {
+            await _dbContext.Set<Product>().Where(x => x.Id.Equals(id)).ExecuteUpdateAsync(p => p.SetProperty(x => x.Actived, x => !x.Actived), cancellationToken);
+        }
+
+        public async Task<IList<Product>> GetRandomsProductAsync(int nums, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Set<Product>()
+                .Include(c => c.Category)
+                .Include(u => u.UnitDetails)
+                .OrderBy(p => Guid.NewGuid())
+                .Take(nums)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<bool> IsProductSlugExistedAsync(int productId, string slug, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Set<Product>()
+                .AnyAsync(p => p.Id != productId && p.UrlSlug == slug, cancellationToken);
+        }
+
+        public async Task<bool> DeleteProductByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Set<Product>()
+                .Where(p => p.Id.Equals(id))
+                .ExecuteDeleteAsync(cancellationToken) > 0;
+        }
+
+        public async Task<bool> AddOrUpdateProductAsync(Product product, CancellationToken cancellationToken)
+        {
+            if (_dbContext.Set<Product>().Any(p => p.Id.Equals(product.Id)))
+            {
+                _dbContext.Entry(product).State = EntityState.Modified;
+            }
+            else
+            {
+                _dbContext.Products.Add(product);
+            }
+            return await _dbContext.SaveChangesAsync(cancellationToken) > 0;
+        }
 
         #endregion
 
@@ -98,7 +142,6 @@ namespace WebWaterPaintStore.Services.WaterPaints
             return categories;
         }
 
-
         public async Task<IPagedList<CategoryItem>> GetPagedCategoryQueryAsync(ICategoryQuery cateQuery, IPagingParams pagingParams, CancellationToken cancellationToken)
         {
             return await CategoriesFilter(cateQuery).ToPagedListAsync(pagingParams, cancellationToken);
@@ -133,9 +176,102 @@ namespace WebWaterPaintStore.Services.WaterPaints
                 .ToPagedListAsync(pagingParams, cancellationToken);
         }
 
+        public async Task<bool> IsCategorySlugExistedAsync(int categoryId, string slug, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Set<Category>()
+                .AnyAsync(c => c.Id != categoryId && c.UrlSlug == slug, cancellationToken);
+        }
 
+        public async Task<bool> DeleteCategoryByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Set<Category>()
+                .Where(c => c.Id.Equals(id))
+                .ExecuteDeleteAsync(cancellationToken) > 0;
+        }
+
+        public async Task<bool> AddOrUpdateCategoryAsync(Category category, CancellationToken cancellationToken)
+        {
+            if (_dbContext.Set<Category>().Any(c => c.Id.Equals(category.Id)))
+            {
+                _dbContext.Entry(category).State = EntityState.Modified;
+            }
+            else
+            {
+                _dbContext.Categories.Add(category);
+            }
+            return await _dbContext.SaveChangesAsync(cancellationToken) > 0;
+        }
 
         #endregion
 
+        #region UnitDetail
+        public async Task<UnitDetail> GetUnitByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Set<UnitDetail>()
+                .Include(c => c.Product)
+                .FirstOrDefaultAsync(s => s.Id.Equals(id), cancellationToken);
+        }
+
+        public async Task<UnitDetail> GetUnitByTagAsync(string tag, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Set<UnitDetail>()
+               .Include(c => c.Product)
+               .FirstOrDefaultAsync(s => s.UnitTag.Equals(tag), cancellationToken);
+        }
+        private IQueryable<UnitDetail> FilterUnit(IUnitQuery unitQuery)
+        {
+            int keyNumber = 0;
+            var keyword = !string.IsNullOrWhiteSpace(unitQuery.Keyword) ? unitQuery.Keyword.ToLower() : "";
+            int.TryParse(unitQuery.Keyword, out keyNumber);
+
+            var units = _dbContext.Set<UnitDetail>()
+                .Include(p => p.Product)
+                .WhereIf(unitQuery.Actived, s => s.Actived)
+                .WhereIf(unitQuery.NotActived, s => !s.Actived)
+                .WhereIf(!string.IsNullOrEmpty(unitQuery.ProductSlug), s => s.Product.UrlSlug.ToLower().Contains(unitQuery.ProductSlug.ToLower()))
+                .WhereIf(!string.IsNullOrEmpty(unitQuery.Keyword), s =>
+                    s.UnitTag.ToLower().Contains(unitQuery.Keyword.ToLower()));
+            return units;
+        }
+
+        public Task<IPagedList<UnitDetail>> GetPagedUnitQueryAsync(IUnitQuery unitQuery, IPagingParams pagingParams, CancellationToken cancellationToken = default)
+        {
+            return FilterUnit(unitQuery).ToPagedListAsync(pagingParams, cancellationToken);
+        }
+
+        public async Task<IPagedList<T>> GetPagedUnitsAsync<T>(IUnitQuery unitQuery, IPagingParams pagingParams, Func<IQueryable<UnitDetail>, IQueryable<T>> mapper)
+        {
+            var units = FilterUnit(unitQuery);
+            var projectedProducts = mapper(units);
+
+            return await projectedProducts.ToPagedListAsync(pagingParams);
+        }
+
+        public async Task<bool> IsUnitTagExistedAsync(int unitId, string tag, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Set<UnitDetail>()
+                .AnyAsync(p => p.Id != unitId && p.UnitTag == tag, cancellationToken);
+        }
+
+        public async Task<bool> DeleteUnitByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Set<UnitDetail>()
+                .Where(p => p.Id.Equals(id))
+                .ExecuteDeleteAsync(cancellationToken) > 0;
+        }
+
+        public async Task<bool> AddOrUpdateUnitAsync(UnitDetail unit, CancellationToken cancellationToken)
+        {
+            if (_dbContext.Set<UnitDetail>().Any(p => p.Id.Equals(unit.Id)))
+            {
+                _dbContext.Entry(unit).State = EntityState.Modified;
+            }
+            else
+            {
+                _dbContext.UnitDetails.Add(unit);
+            }
+            return await _dbContext.SaveChangesAsync(cancellationToken) > 0;
+        }
+        #endregion
     }
 }
