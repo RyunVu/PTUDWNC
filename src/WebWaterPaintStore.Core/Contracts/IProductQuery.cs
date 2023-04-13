@@ -7,6 +7,9 @@
         public string CategorySlug { get; set; }
 
         public string ProductSlug { get; set; }
+        public string UnitTag { get; set; }
+
+        public bool Actived { get; set; }
 
         public int? Year { get; set; }
 

@@ -7,6 +7,8 @@ namespace WebWaterPaintStore.Core.Collections
         public int? CategoryId { get;set; }
         public string CategorySlug { get; set; } = "";
         public string ProductSlug { get; set; } = "";
+        public string UnitTag { get; set; } = "";
+        public bool Actived { get; set; } = false;
         public int? Year { get; set; } = 0;
         public int? Month { get; set; } = 0;
         public int? Day { get; set; } = 0;
