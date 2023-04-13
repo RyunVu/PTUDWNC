@@ -30,6 +30,9 @@ namespace WebWaterPaintStore.Data.Mappings
             builder.Property(s => s.SoldCount)
                .HasMaxLength(0);
 
+            builder.Property(p => p.Actived)
+                .IsRequired()
+                .HasDefaultValue(false);
 
         }
     }

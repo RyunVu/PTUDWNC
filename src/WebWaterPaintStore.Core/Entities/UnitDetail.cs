@@ -19,6 +19,8 @@ namespace WebWaterPaintStore.Core.Entities
 
         public int ProductId { get; set; }
 
+        public bool Actived { get; set; }
+
         // Properties
         public Product Product { get; set; }
     }
