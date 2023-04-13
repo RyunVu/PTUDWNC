@@ -24,6 +24,16 @@ namespace WebWaterPaintStore.Services.WaterPaints
                 IPagingParams pagingParams,
                 Func<IQueryable<Product>, IQueryable<T>> mapper);
 
+            Task<IList<Product>> GetRandomsProductAsync(int nums, CancellationToken cancellationToken = default);
+
+            Task<bool> IsProductSlugExistedAsync(int productId, string slug, CancellationToken cancellationToken = default);
+
+            Task<bool> DeleteProductByIdAsync(int id, CancellationToken cancellationToken = default);
+            
+            Task<bool> AddOrUpdateProductAsync(Product product, CancellationToken cancellationToken);
+
+            Task ToggleActivedStatusAsync(int id, CancellationToken cancellationToken= default);
+
         #endregion
 
         #region Category
@@ -51,7 +61,36 @@ namespace WebWaterPaintStore.Services.WaterPaints
             string keyword = null,
             CancellationToken cancellationToken = default);
 
+        Task<bool> IsCategorySlugExistedAsync(int categoryId, string slug, CancellationToken cancellationToken = default);
+
+        Task<bool> DeleteCategoryByIdAsync(int id, CancellationToken cancellationToken = default);
+
+        Task<bool> AddOrUpdateCategoryAsync(Category category, CancellationToken cancellationToken);
         #endregion
 
+        #region UnitDetail
+        Task<UnitDetail> GetUnitByIdAsync(
+                int id,
+                CancellationToken cancellationToken = default);
+
+        Task<UnitDetail> GetUnitByTagAsync(string tag,
+            CancellationToken cancellationToken = default);
+
+        Task<IPagedList<UnitDetail>> GetPagedUnitQueryAsync(
+            IUnitQuery unitQuery,
+            IPagingParams pagingParams,
+            CancellationToken cancellationToken = default);
+
+        Task<IPagedList<T>> GetPagedUnitsAsync<T>(
+            IUnitQuery unitQuery,
+            IPagingParams pagingParams,
+            Func<IQueryable<UnitDetail>, IQueryable<T>> mapper);
+
+        Task<bool> IsUnitTagExistedAsync(int unitId, string tag, CancellationToken cancellationToken = default);
+
+        Task<bool> DeleteUnitByIdAsync(int id, CancellationToken cancellationToken = default);
+
+        Task<bool> AddOrUpdateUnitAsync(UnitDetail unit, CancellationToken cancellationToken);
+        #endregion
     }
 }
