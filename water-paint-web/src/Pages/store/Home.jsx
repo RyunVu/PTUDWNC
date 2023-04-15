@@ -1,3 +1,11 @@
-export default function Home() {
-    return <div>Home page</div>;
+import Banner from '../../Components/store/Banner';
+
+function Home() {
+    return (
+        <div>
+            <Banner />
+        </div>
+    );
 }
+
+export default Home;
