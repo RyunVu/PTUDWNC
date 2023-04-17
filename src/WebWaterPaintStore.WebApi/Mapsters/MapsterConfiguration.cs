@@ -19,8 +19,13 @@ namespace WebWaterPaintStore.WebApi.Mapsters
                 .Map(dest => dest.UnitCount,
                     src => src.UnitDetails == null ? 0 : src.UnitDetails.Count);
 
+            config.NewConfig<ProductEditModel, Product>()
+                .Ignore(dest => dest.Id);
+
             config.NewConfig<UnitDetail, UnitDetailDto>();
             config.NewConfig<UnitDetail, UnitDetailItem>();
+
+            
 
         }
     }
