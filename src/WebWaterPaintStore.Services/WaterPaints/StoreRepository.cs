@@ -1,6 +1,7 @@
 ﻿using Azure;
 using Microsoft.EntityFrameworkCore;
 using SlugGenerator;
+using System.ComponentModel;
 using WebWaterPaintStore.Core.Collections;
 using WebWaterPaintStore.Core.Contracts;
 using WebWaterPaintStore.Core.DTO;
@@ -66,7 +67,7 @@ namespace WebWaterPaintStore.Services.WaterPaints
             return await projectedProducts.ToPagedListAsync(pagingParams);
         }
 
-        public async Task ToggleActivedStatusAsync(int id, CancellationToken cancellationToken = default)
+        public async Task ToggleProductActivedStatusAsync(int id, CancellationToken cancellationToken = default)
         {
             await _dbContext.Set<Product>().Where(x => x.Id.Equals(id)).ExecuteUpdateAsync(p => p.SetProperty(x => x.Actived, x => !x.Actived), cancellationToken);
         }
@@ -94,7 +95,7 @@ namespace WebWaterPaintStore.Services.WaterPaints
                 .ExecuteDeleteAsync(cancellationToken) > 0;
         }
 
-        public async Task<bool> AddOrUpdateProductAsync(Product product, CancellationToken cancellationToken)
+        public async Task<bool> AddOrUpdateProductAsync(Product product, CancellationToken cancellationToken = default)
         {
             if (_dbContext.Set<Product>().Any(p => p.Id.Equals(product.Id)))
             {
@@ -105,6 +106,17 @@ namespace WebWaterPaintStore.Services.WaterPaints
                 _dbContext.Products.Add(product);
             }
             return await _dbContext.SaveChangesAsync(cancellationToken) > 0;
+        }
+
+        public async Task<bool> SetImageUrlAsync(
+        int id, string imageUrl,
+        CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Products
+                .Where(x => x.Id == id)
+                .ExecuteUpdateAsync(x =>
+                    x.SetProperty(a => a.ImageUrl, a => imageUrl),
+                    cancellationToken) > 0;
         }
 
         #endregion
@@ -205,18 +217,18 @@ namespace WebWaterPaintStore.Services.WaterPaints
         #endregion
 
         #region UnitDetail
-        public async Task<UnitDetail> GetUnitByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<UnitDetail> GetUnitByIdAsync(int productId,int id, CancellationToken cancellationToken = default)
         {
             return await _dbContext.Set<UnitDetail>()
                 .Include(c => c.Product)
-                .FirstOrDefaultAsync(s => s.Id.Equals(id), cancellationToken);
+                .FirstOrDefaultAsync(s => s.Id.Equals(id) && s.Product.Id.Equals(productId), cancellationToken);
         }
 
-        public async Task<UnitDetail> GetUnitByTagAsync(string tag, CancellationToken cancellationToken = default)
+        public async Task<UnitDetail> GetUnitByTagAsync(int productId, string tag, CancellationToken cancellationToken = default)
         {
             return await _dbContext.Set<UnitDetail>()
                .Include(c => c.Product)
-               .FirstOrDefaultAsync(s => s.UnitTag.Equals(tag), cancellationToken);
+               .FirstOrDefaultAsync(s => s.UnitTag.Equals(tag) && s.ProductId.Equals(productId), cancellationToken);
         }
         private IQueryable<UnitDetail> FilterUnit(IUnitQuery unitQuery)
         {
@@ -242,15 +254,16 @@ namespace WebWaterPaintStore.Services.WaterPaints
         public async Task<IPagedList<T>> GetPagedUnitsAsync<T>(IUnitQuery unitQuery, IPagingParams pagingParams, Func<IQueryable<UnitDetail>, IQueryable<T>> mapper)
         {
             var units = FilterUnit(unitQuery);
-            var projectedProducts = mapper(units);
+            var projectedUnits = mapper(units);
 
-            return await projectedProducts.ToPagedListAsync(pagingParams);
+            return await projectedUnits.ToPagedListAsync(pagingParams);
         }
 
-        public async Task<bool> IsUnitTagExistedAsync(int unitId, string tag, CancellationToken cancellationToken = default)
+        public async Task<bool> IsUnitTagExistedAsync(int postId, string tag, CancellationToken cancellationToken = default)
         {
-            return await _dbContext.Set<UnitDetail>()
-                .AnyAsync(p => p.Id != unitId && p.UnitTag == tag, cancellationToken);
+            return await _dbContext.Set<Product>()
+                .Include(u => u.UnitDetails)
+                .AnyAsync(p => p.Id.Equals(postId) &&  p.UnitDetails.Any(u => u.UnitTag.Equals(tag)));
         }
 
         public async Task<bool> DeleteUnitByIdAsync(int id, CancellationToken cancellationToken = default)
@@ -260,7 +273,7 @@ namespace WebWaterPaintStore.Services.WaterPaints
                 .ExecuteDeleteAsync(cancellationToken) > 0;
         }
 
-        public async Task<bool> AddOrUpdateUnitAsync(UnitDetail unit, CancellationToken cancellationToken)
+        public async Task<bool> AddOrUpdateUnitAsync(UnitDetail unit, CancellationToken cancellationToken = default)
         {
             if (_dbContext.Set<UnitDetail>().Any(p => p.Id.Equals(unit.Id)))
             {
@@ -271,6 +284,11 @@ namespace WebWaterPaintStore.Services.WaterPaints
                 _dbContext.UnitDetails.Add(unit);
             }
             return await _dbContext.SaveChangesAsync(cancellationToken) > 0;
+        }
+
+        public async Task ToggleProductUnitActivedStatusAsync(int id, CancellationToken cancellationToken = default)
+        {
+            await _dbContext.Set<UnitDetail>().Where(x => x.Id.Equals(id)).ExecuteUpdateAsync(p => p.SetProperty(x => x.Actived, x => !x.Actived), cancellationToken);
         }
         #endregion
     }
