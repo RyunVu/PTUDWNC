@@ -32,6 +32,8 @@ namespace WebWaterPaintStore.Core.Entities
         public int CategoryId { get; set; }
 
 
+
+
         // Properties
 
 

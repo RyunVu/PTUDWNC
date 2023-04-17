@@ -1,10 +1,7 @@
-﻿using WebWaterPaintStore.Core.Entities;
-
-namespace WebWaterPaintStore.WebApi.Models
+﻿namespace WebWaterPaintStore.WebApi.Models
 {
-    public class UnitDetailDto
+    public class UnitEditModel
     {
-        public int Id { get; set; }
         public string UnitTag { get; set; }
         public int Price { get; set; }
         public int Quantity { get; set; }
@@ -12,5 +9,6 @@ namespace WebWaterPaintStore.WebApi.Models
         public int SoldCount { get; set; }
         public bool Actived { get; set; }
         public int ProductId { get; set; }
+
     }
 }
