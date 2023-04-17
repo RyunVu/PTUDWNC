@@ -27,8 +27,8 @@ namespace WebWaterPaintStore.WebApi.Endpoints
                .Produces<ApiResponse<CategoryItem>>()
                .Produces(404);
 
-            routeGroupBuilder.MapGet("/{slug:regex(^[a-z0-9_-]+$)}/product", GetPostsByCategorySlug)
-                .WithName("GetPostsByCategorySlug")
+            routeGroupBuilder.MapGet("/{slug:regex(^[a-z0-9_-]+$)}/product", GetProductByCategorySlug)
+                .WithName("GetProductByCategorySlug")
                 .Produces<ApiResponse<PaginationResult<ProductDto>>>();
 
             routeGroupBuilder.MapPost("/", AddCategory)
@@ -75,7 +75,7 @@ namespace WebWaterPaintStore.WebApi.Endpoints
 
         }
 
-        private static async Task<IResult> GetPostsByCategorySlug(
+        private static async Task<IResult> GetProductByCategorySlug(
             [FromRoute] string slug,
             [AsParameters] PagingModel pagingModel,
             IStoreRepository StoreRepo)

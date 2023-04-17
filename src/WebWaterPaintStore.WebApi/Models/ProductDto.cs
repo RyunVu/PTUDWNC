@@ -11,7 +11,7 @@ namespace WebWaterPaintStore.WebApi.Models
         public DateTime CreatedDate { get; set; }
         public bool Actived { get; set; }
         public string ImageUrl { get; set; }
-        public Category Category { get; set; }
+        public CategoryDto Category { get; set; }
         public IList<UnitDetailDto> UnitDetails { get; set; }
        
 
