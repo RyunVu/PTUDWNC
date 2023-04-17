@@ -26,6 +26,7 @@ namespace WebWaterPaintStore.Services.WaterPaints
         {
             return await _dbContext.Set<Product>()
                 .Include(c => c.Category)
+                .Include(u => u.UnitDetails)
                 .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
         }
 
@@ -33,7 +34,8 @@ namespace WebWaterPaintStore.Services.WaterPaints
         {
             return await _dbContext.Set<Product>()
                .Include(c => c.Category)
-               .FirstOrDefaultAsync(s => s.UrlSlug == slug, cancellationToken);
+                .Include(u => u.UnitDetails)
+               .FirstOrDefaultAsync(s => s.UrlSlug.Equals(slug), cancellationToken);
         }
 
         private IQueryable<Product> FilterProduct(IProductQuery productQuery)

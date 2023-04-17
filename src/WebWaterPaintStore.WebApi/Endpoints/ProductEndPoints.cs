@@ -31,12 +31,12 @@ namespace WebWaterPaintStore.WebApi.Endpoints
 
             routeGroupBuilder.MapGet("/{id:int}", GetProductById)
                 .WithName("GetProductById")
-                .Produces<ApiResponse<ProductItem>>()
+                .Produces<ApiResponse<ProductDto>>()
                 .Produces(404);
 
             routeGroupBuilder.MapGet("/byslug/{slug:regex(^[a-z0-9_-]+$)}", GetProductBySlug)
                 .WithName("GetProductBySlug")
-                .Produces<ApiResponse<PaginationResult<ProductItem>>>()
+                .Produces<ApiResponse<PaginationResult<ProductDto>>>()
                 .Produces(404);
 
             routeGroupBuilder.MapPost("/", AddProduct)
@@ -80,7 +80,7 @@ namespace WebWaterPaintStore.WebApi.Endpoints
 
             routeGroupBuilder.MapGet("/{id:int}/unit/bytag/{tag::regex(^[a-z0-9_-]+$)}", GetProductUnitByTag)
                 .WithName("GetProductUnitByTag")
-                .Produces<ApiResponse<PaginationResult<ProductItem>>>()
+                .Produces<ApiResponse<PaginationResult<UnitDetailItem>>>()
                 .Produces(404);
 
             #endregion
@@ -122,7 +122,7 @@ namespace WebWaterPaintStore.WebApi.Endpoints
         {
             var product = await storeRepo.GetProductByIdAsync(id);
 
-            var productDetail = mapper.Map<ProductItem>(product);
+            var productDetail = mapper.Map<ProductDto>(product);
 
             return productDetail != null
                     ? Results.Ok(ApiResponse.Success(productDetail))
@@ -311,6 +311,7 @@ namespace WebWaterPaintStore.WebApi.Endpoints
                 ? Results.Ok(ApiResponse.Success(unitDetail))
                 : Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Không tìm thấy loại sản phẩm với tên loại: `{tag}`"));
         }
+
         #endregion
 
     }
