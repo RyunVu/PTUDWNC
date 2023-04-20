@@ -172,6 +172,7 @@ namespace WebWaterPaintStore.Services.WaterPaints
                     Name = a.Name,
                     UrlSlug = a.UrlSlug,
                     Description = a.Description,
+                    Actived = a.Actived,
                     ProductsCount = a.Products.Count(p => p.Actived)
                 })
                 .ToPagedListAsync(pagingParams, cancellationToken);
