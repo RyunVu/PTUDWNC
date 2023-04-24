@@ -46,9 +46,9 @@ function App() {
                         <Route path="/admin/products/edit" element={<ProductEdit />} />
                         <Route path="/admin/products/edit/:id" element={<ProductEdit />} />
 
-                        <Route path="/admin/products/:id/units/" element={<Units />} />
-                        <Route path="/admin/products/:id/units/edit" element={<UnitEdit />} />
-                        <Route path="/admin/products/:id/units/edit/:id" element={<UnitEdit />} />
+                        <Route path="/admin/products/edit/:id/units/" element={<Units />} />
+                        <Route path="/admin/products/edit/:id/units" element={<UnitEdit />} />
+                        <Route path="/admin/products/edit/:id/units/:id" element={<UnitEdit />} />
                     </Route>
 
                     <Route path="/400" element={<BadRequest />} />

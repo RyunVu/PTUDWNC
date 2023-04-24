@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faMapMarked, faPhone, faEnvelope, faCode } from '@fortawesome/free-solid-svg-icons';
-import '../../styles/contact.css';
 import emailjs from '@emailjs/browser';
+import './contact.css';
 
 const Contact = () => {
     useEffect(() => {

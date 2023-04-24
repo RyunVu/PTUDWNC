@@ -53,7 +53,7 @@ namespace WebWaterPaintStore.WebApi.Endpoints
                 .Produces(400)
                 .Produces(409);
 
-            routeGroupBuilder.MapGet("/ToggleProduct/{id:int}", ToggleActiveStatus)
+            routeGroupBuilder.MapGet("/toggleProduct/{id:int}", ToggleActiveStatus)
                 .WithName("TogglePublicStatus")
                 .Produces(204)
                 .Produces(404);

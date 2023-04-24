@@ -30,3 +30,11 @@ export async function deleteCategoryById(id) {
     const { data } = await axios.delete(`${process.env.REACT_APP_API_ENDPOINT}/category/${id}`);
     return data;
 }
+
+export async function getCategories() {
+    const { data } = await axios.get(
+        `${process.env.REACT_APP_API_ENDPOINT}/category?Actived=true&PageSize=1000&PageNumber=1`,
+    );
+    if (data.isSuccess) return data.result;
+    else return null;
+}

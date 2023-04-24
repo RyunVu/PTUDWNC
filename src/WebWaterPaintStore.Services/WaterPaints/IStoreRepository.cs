@@ -35,6 +35,7 @@ namespace WebWaterPaintStore.Services.WaterPaints
 
             Task ToggleProductActivedStatusAsync(int id, CancellationToken cancellationToken = default);
             Task<bool> SetImageUrlAsync(int id, string imageUrl, CancellationToken cancellationToken = default);
+            Task<IList<Product>> GetProductsByUnitTagAsync(string slug, CancellationToken cancellationToken = default);
 
         #endregion
 

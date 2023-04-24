@@ -6,7 +6,7 @@ import { decode, isInteger } from '../../../Utils/utils';
 
 import { createCategory, getCategoryById, updateCategory } from '../../../Services/categories';
 
-export default function Edit() {
+export default function ProductEdit() {
     // Hooks
     const navigate = useNavigate();
 
