@@ -61,7 +61,7 @@ export default function Categories() {
 
     return (
         <div className="mb-5">
-            <h1>Danh sách chủ đề</h1>
+            <div className="text">Danh sách chủ đề</div>
             <CategoryFilterPane setKeyword={setKeyword} setActived={setActived} />
             {isLoading ? (
                 <Loading />
@@ -88,7 +88,12 @@ export default function Categories() {
                                         <td>{category.actived ? 'Có' : 'Không'}</td>
                                         <td>{category.productsCount}</td>
                                         <td>
-                                            <button onClick={(e) => handleDeleteCategory(e, category.id)}>Xóa</button>
+                                            <button
+                                                type="button"
+                                                className="btn btn-danger"
+                                                onClick={(e) => handleDeleteCategory(e, category.id)}>
+                                                Xóa
+                                            </button>
                                         </td>
                                     </tr>
                                 ))
