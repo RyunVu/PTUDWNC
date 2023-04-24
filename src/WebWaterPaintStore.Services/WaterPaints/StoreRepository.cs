@@ -38,6 +38,7 @@ namespace WebWaterPaintStore.Services.WaterPaints
                .FirstOrDefaultAsync(s => s.UrlSlug.Equals(slug), cancellationToken);
         }
 
+
         private IQueryable<Product> FilterProduct(IProductQuery productQuery)
         {
             var products = _dbContext.Set<Product>()
@@ -47,6 +48,7 @@ namespace WebWaterPaintStore.Services.WaterPaints
                 .WhereIf(productQuery.Month > 0, s => s.CreatedDate.Month == productQuery.Month)
                 .WhereIf(productQuery.Day > 0, s => s.CreatedDate.Day == productQuery.Day)
                 .WhereIf(!string.IsNullOrEmpty(productQuery.CategorySlug), s => s.Category.UrlSlug.Contains(productQuery.CategorySlug))
+                .WhereIf(productQuery.CategoryId > 0, s=> s.Category.Id.Equals(productQuery.CategoryId))
                 .WhereIf(!string.IsNullOrEmpty(productQuery.ProductSlug), s => s.UrlSlug.Contains(productQuery.ProductSlug))
                 .WhereIf(!string.IsNullOrWhiteSpace(productQuery.UnitTag), p => p.UnitDetails.Any(t => t.UnitTag == productQuery.UnitTag))
                 .WhereIf(!string.IsNullOrEmpty(productQuery.Keyword), s =>
@@ -119,6 +121,18 @@ namespace WebWaterPaintStore.Services.WaterPaints
                 .ExecuteUpdateAsync(x =>
                     x.SetProperty(a => a.ImageUrl, a => imageUrl),
                     cancellationToken) > 0;
+        }
+
+        public async Task<IList<Product>> GetProductsByUnitTagAsync(
+            string slug,
+            CancellationToken cancellationToken = default)
+        {
+            
+            return await _dbContext.Set<Product>()
+                .Include(c => c.Category)
+                .Include(u => u.UnitDetails)
+                .Where(p => p.UnitDetails.Any(t => t.UnitTag == slug))
+                .ToListAsync(cancellationToken); 
         }
 
         #endregion
