@@ -1,4 +1,4 @@
-export { default as AdminLayout } from './Layout';
+export { default as AdminLayout } from './Layout/Layout';
 export { default as AdminHome } from './Dashboard/Dashboard';
 export { default as Categories } from './Category/Categories';
 export { default as Products } from './Product/Products';

@@ -32,7 +32,6 @@ export default function ProductEdit() {
 
     // Component's event handlers
     const handleSubmit = async (e) => {
-        console.log('why u no work?');
         e.preventDefault();
 
         if (e.currentTarget.checkValidity() === false) {
