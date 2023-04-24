@@ -27,7 +27,7 @@ export default function Categories() {
         window.scroll(0, 0);
     };
     const handleDeleteCategory = async (e, id) => {
-        if (window.confirm('Bạn có chắc muốn xóa chủ đề?')) {
+        if (window.confirm('Bạn có chắc muốn xóa loại sản phẩm?')) {
             const data = await deleteCategoryById(id);
             if (data.isSuccess) alert(data.result);
             else alert(data.errors[0]);
