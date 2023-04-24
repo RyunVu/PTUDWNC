@@ -161,5 +161,16 @@ namespace WebWaterPaintStore.WebApi.Endpoints
 
         }
 
+        private static async Task<IResult> GetProductByUnitTag(
+            string tag,
+            IMapper mapper,
+            IStoreRepository storeRepo)
+        {
+            var products = await storeRepo.GetProductsByUnitTagAsync(tag);
+
+            var productDto = mapper.Map<ProductDto>(products);
+
+            return Results.Ok(ApiResponse.Success(productDto));
+        }
     }
 }
