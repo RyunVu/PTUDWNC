@@ -4,20 +4,20 @@ import { Link } from 'react-router-dom';
 
 export default function AuthorFilterPane({ setKeyword, setActived }) {
     const keywordRef = useRef();
-    const activedRef = useRef();
+    // const activedRef = useRef();
 
     // Component's event handlers
     const handleFilterAuthors = (e) => {
         e.preventDefault();
         setKeyword(keywordRef.current.value);
-        setActived(activedRef.current.checked);
+        // setActived(activedRef.current.checked);
     };
 
     const handleClearFilter = () => {
         setKeyword('');
-        setActived(false);
+        // setActived(false);
         keywordRef.current.value = '';
-        activedRef.current.checked = false;
+        // activedRef.current.checked = false;
     };
 
     return (
