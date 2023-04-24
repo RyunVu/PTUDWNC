@@ -1,15 +1,17 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from '../../Components/admin/Navbar';
 import Footer from '../../Components/store/Footer';
+import Sidebar from '../../Components/admin/Sidebar/sidebar';
 
 const AdminLayout = () => {
     return (
         <>
-            <Navbar />
-            <div className="container-fluid py-3">
+            {/* <Navbar /> */}
+            <Sidebar />
+            {/* <div className="container-fluid py-3">
                 <Outlet />
-            </div>
-            <Footer />
+            </div> */}
+            {/* <Footer /> */}
         </>
     );
 };
