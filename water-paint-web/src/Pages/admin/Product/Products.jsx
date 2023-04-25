@@ -16,7 +16,6 @@ export default function Products() {
     const [isLoading, setIsLoading] = useState(true);
     const [metadata, setMetadata] = useState({});
     const [keyword, setKeyword] = useState('');
-    const [authorId, setAuthorId] = useState();
     const [categoryId, setCategoryId] = useState();
     const [unitTag, setUnitTag] = useState();
     const [year, setYear] = useState();
@@ -53,7 +52,6 @@ export default function Products() {
                 PageSize: 10,
             });
             keyword && queries.append('Keyword', keyword);
-            authorId && queries.append('AuthorId', authorId);
             categoryId && queries.append('CategoryId', categoryId);
             unitTag && queries.append('UnitTag', unitTag);
             year && queries.append('productedYear', year);
@@ -69,14 +67,13 @@ export default function Products() {
             }
             setIsLoading(false);
         }
-    }, [pageNumber, keyword, authorId, categoryId, unitTag, year, month, actived, isChangeStatus]);
+    }, [pageNumber, keyword, categoryId, unitTag, year, month, actived, isChangeStatus]);
 
     return (
         <div className="mb-5">
             <div className="text">Danh sách sản phẩm</div>
             <ProductFilterPane
                 setKeyword={setKeyword}
-                setAuthorId={setAuthorId}
                 setCategoryId={setCategoryId}
                 setUnitTag={setUnitTag}
                 setYear={setYear}
@@ -119,7 +116,7 @@ export default function Products() {
                                                     );
                                                 })}
                                                 <Link
-                                                    to={`/admin/products/edit/${product.id}/units`}
+                                                    to={`/admin/products/${product.id}}/add/units`}
                                                     className="btn btn-success float-end">
                                                     +
                                                 </Link>
