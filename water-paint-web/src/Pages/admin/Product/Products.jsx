@@ -73,7 +73,7 @@ export default function Products() {
 
     return (
         <div className="mb-5">
-            <h1>Danh sách sản phẩm</h1>
+            <div className="text">Danh sách sản phẩm</div>
             <ProductFilterPane
                 setKeyword={setKeyword}
                 setAuthorId={setAuthorId}
