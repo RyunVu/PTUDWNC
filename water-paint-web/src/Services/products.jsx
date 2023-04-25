@@ -33,6 +33,6 @@ export async function deleteProductById(id) {
 
 export async function toggleProductActivedStatus(id) {
     const { data } = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/product/toggleProduct/${id}`);
-
+    console.log(data);
     return data;
 }
