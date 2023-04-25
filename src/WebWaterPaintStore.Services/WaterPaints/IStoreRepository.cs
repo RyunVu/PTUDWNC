@@ -100,6 +100,8 @@ namespace WebWaterPaintStore.Services.WaterPaints
 
         Task ToggleProductUnitActivedStatusAsync(int id, CancellationToken cancellationToken = default);
 
+        Task<UnitDetail> GetUnitByIdAsync(int id, CancellationToken cancellation = default);
+
         #endregion
     }
 }

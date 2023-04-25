@@ -29,21 +29,14 @@ namespace WebWaterPaintStore.WebApi.Validations
                 .MaximumLength(1280)
                 .WithMessage("Slug không được nhiều hơn 1000 ký tự");
 
-            RuleFor(s => s.ImageUrl);
-                //.NotEmpty()
-                //.WithMessage("Ảnh không được bỏ trống");
+            RuleFor(s => s.ImageUrl)
+                .NotEmpty()
+                .WithMessage("Ảnh không được bỏ trống");
 
             RuleFor(s => s.CategoryId)
                 .NotEmpty()
                 .WithMessage("Bạn phải chọn loại cho sản phẩm");
 
-            //RuleFor(s => s.ProductUnitDetails)
-            //    .Must(HasAtLeastOneUnit)
-            //    .WithMessage("Bạn phải nhập ít nhất đơn vị tính cho sản phẩm");
         }
-        //private bool HasAtLeastOneUnit(ProductEditModel model, IList<UnitDetailDto> unitDetails)
-        //{
-        //    return model.ProductUnitDetails.Count > 0;
-        //}
     }
 }

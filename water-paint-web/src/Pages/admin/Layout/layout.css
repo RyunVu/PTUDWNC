@@ -271,15 +271,16 @@ body.dark .sidebar li a:hover .text {
     height: var(--svg-height);
     width: var(--svg-weight);
 }
-.mode .sun-moon svg.sun {
+
+.mode .sun-moon svg.moon {
     opacity: 0;
 }
 
 body.dark .mode .sun-moon svg.sun {
-    opacity: 1;
+    opacity: 0;
 }
 body.dark .mode .sun-moon svg.moon {
-    opacity: 0;
+    opacity: 1;
 }
 
 .menu-bar .bottom-content .toggle-switch {

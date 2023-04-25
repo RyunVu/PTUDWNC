@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SlugGenerator;
 using System.ComponentModel;
+using System.Threading;
 using WebWaterPaintStore.Core.Collections;
 using WebWaterPaintStore.Core.Contracts;
 using WebWaterPaintStore.Core.DTO;
@@ -306,6 +307,12 @@ namespace WebWaterPaintStore.Services.WaterPaints
         public async Task ToggleProductUnitActivedStatusAsync(int id, CancellationToken cancellationToken = default)
         {
             await _dbContext.Set<UnitDetail>().Where(x => x.Id.Equals(id)).ExecuteUpdateAsync(p => p.SetProperty(x => x.Actived, x => !x.Actived), cancellationToken);
+        }
+
+        public async Task<UnitDetail> GetUnitByIdAsync(int id, CancellationToken cancellation = default)
+        {
+            return await _dbContext.Set<UnitDetail>()
+              .FirstOrDefaultAsync(s => s.Id.Equals(id), cancellation);
         }
         #endregion
     }

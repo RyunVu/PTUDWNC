@@ -23,6 +23,11 @@ namespace WebWaterPaintStore.WebApi.Endpoints
                .WithName("GetProductUnits")
                .Produces<ApiResponse<PaginationResult<UnitDetailDto>>>();
 
+            routeGroupBuilder.MapGet("/{id:int}", GetUnitById)
+               .WithName("GetUnitById")
+               .Produces<ApiResponse<UnitDetailDto>>()
+               .Produces(404);
+
             routeGroupBuilder.MapPost("/", AddProductUnit)
                .WithName("AddProductUnit")
                .AddEndpointFilter<ValidatorFilter<UnitEditModel>>()
@@ -37,15 +42,15 @@ namespace WebWaterPaintStore.WebApi.Endpoints
                 .Produces(400)
                 .Produces(409);
 
-            //routeGroupBuilder.MapGet("/ToggleActive/{id:int}", ToggleActiveStatus)
-            //    .WithName("ToggleUnitActiveStatus")
-            //    .Produces(204)
-            //    .Produces(404);
+            routeGroupBuilder.MapPost("/toggleUnit/{id:int}", ToggleUnitActiveStatus)
+                .WithName("ToggleUnitActivedStatus")
+                .Produces<ApiResponse<string>>();
 
             routeGroupBuilder.MapDelete("/{id:int}", DeleteProductUnit)
                 .WithName("DeleteProductUnit")
                 .Produces(204)
                 .Produces(404);
+
 
             return app;
         }
@@ -87,7 +92,7 @@ namespace WebWaterPaintStore.WebApi.Endpoints
 
             await storeRepo.AddOrUpdateUnitAsync(unit);
 
-            return Results.Ok(ApiResponse.Success(mapper.Map<UnitDetailItem>(unit), HttpStatusCode.Created));
+            return Results.Ok(ApiResponse.Success(mapper.Map<UnitDetailInfo>(unit), HttpStatusCode.Created));
         }
 
         private static async Task<IResult> UpdateProductUnit(
@@ -114,12 +119,12 @@ namespace WebWaterPaintStore.WebApi.Endpoints
                     $"Không tìm thấy loại sản phẩm với id: `{id}`"));
             }       
 
-            if (await storeRepo.IsUnitTagExistedAsync(isExitsProduct.Id, model.UnitTag))
-            {
-                return Results.Ok(ApiResponse.Fail(
-                    HttpStatusCode.Conflict,
-                    $"Slug {model.UnitTag} đã được sử dụng"));
-            }
+            //if (await storeRepo.IsUnitTagExistedAsync(isExitsProduct.Id, model.UnitTag))
+            //{
+            //    return Results.Ok(ApiResponse.Fail(
+            //        HttpStatusCode.Conflict,
+            //        $"Slug {model.UnitTag} đã được sử dụng"));
+            //}
 
             mapper.Map(model, unit);
             unit.Id = id;
@@ -130,23 +135,6 @@ namespace WebWaterPaintStore.WebApi.Endpoints
                 : Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, "Không tìm thấy sản phẩm"));
         }
 
-        //private static async Task<IResult> ToggleActiveStatus(
-        //    int id,
-        //    IStoreRepository storeRepo)
-        //{
-        //    var oldUnit = await storeRepo.GetUnitByIdAsync(id);
-
-        //    if (oldUnit == null)
-        //    {
-        //        return Results.Ok(ApiResponse.Fail(
-        //            HttpStatusCode.NotFound,
-        //            $"Không tìm thấy loại sản phẩm với id: `{id}`"));
-        //    }
-
-        //    await storeRepo.ToggleProductUnitActivedStatusAsync(id);
-        //    return Results.Ok(ApiResponse.Success("Toggle product active success"));
-        //}
-
         private static async Task<IResult> DeleteProductUnit(
             int id,
             IStoreRepository storeRepo)
@@ -154,23 +142,44 @@ namespace WebWaterPaintStore.WebApi.Endpoints
             var oldProduct = await storeRepo.GetProductByIdAsync(id);
 
             return await storeRepo.DeleteUnitByIdAsync(id)
-                ? Results.Ok(ApiResponse.Success(HttpStatusCode.NoContent))
+                ? Results.Ok(ApiResponse.Success("Loại sản phẩm đã được xóa", HttpStatusCode.NoContent))
                 : Results.Ok(ApiResponse.Fail(
                     HttpStatusCode.NotFound,
                     $"Không tìm thấy loại sản phẩm với id: `{id}`"));
 
         }
 
-        private static async Task<IResult> GetProductByUnitTag(
-            string tag,
-            IMapper mapper,
+        private static async Task<IResult> GetUnitById(
+            int id,
+            IStoreRepository storeRepo,
+            IMapper mapper)
+        {
+            var unit = await storeRepo.GetUnitByIdAsync(id);
+
+            var unitDetail = mapper.Map<UnitDetailDto>(unit);
+
+            return unitDetail != null
+                    ? Results.Ok(ApiResponse.Success(unitDetail))
+                    : Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Không tìm thấy sản phẩm loại với id: `{id}`"));
+        }
+
+        private static async Task<IResult> ToggleUnitActiveStatus(
+            int id,
             IStoreRepository storeRepo)
         {
-            var products = await storeRepo.GetProductsByUnitTagAsync(tag);
 
-            var productDto = mapper.Map<ProductDto>(products);
+            var oldUnit = await storeRepo.GetUnitByIdAsync(id);
 
-            return Results.Ok(ApiResponse.Success(productDto));
+            if (oldUnit == null)
+            {
+                return Results.Ok(ApiResponse.Fail(
+                    HttpStatusCode.NotFound,
+                    $"Không tìm thấy sản phẩm với id: `{id}`"));
+            }
+
+            await storeRepo.ToggleProductUnitActivedStatusAsync(id);
+
+            return Results.Ok(ApiResponse.Success("Toggle product active success"));
         }
     }
 }

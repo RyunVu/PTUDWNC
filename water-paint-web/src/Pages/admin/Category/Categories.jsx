@@ -26,6 +26,7 @@ export default function Categories() {
         setPageNumber((current) => current + value);
         window.scroll(0, 0);
     };
+
     const handleDeleteCategory = async (e, id) => {
         if (window.confirm('Bạn có chắc muốn xóa loại sản phẩm?')) {
             const data = await deleteCategoryById(id);
@@ -85,6 +86,7 @@ export default function Categories() {
                                                 {category.name}
                                             </Link>
                                         </td>
+
                                         <td>{category.actived ? 'Có' : 'Không'}</td>
                                         <td>{category.productsCount}</td>
                                         <td>

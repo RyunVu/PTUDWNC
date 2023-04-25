@@ -53,10 +53,9 @@ namespace WebWaterPaintStore.WebApi.Endpoints
                 .Produces(400)
                 .Produces(409);
 
-            routeGroupBuilder.MapGet("/toggleProduct/{id:int}", ToggleActiveStatus)
+            routeGroupBuilder.MapPost("/toggleProduct/{id:int}", ToggleActiveStatus)
                 .WithName("TogglePublicStatus")
-                .Produces(204)
-                .Produces(404);
+                .Produces<ApiResponse<string>>();
 
             routeGroupBuilder.MapPost("/{id:int}/picture", SetProductPicture)
                 .WithName("SetProductPicture")
@@ -68,6 +67,7 @@ namespace WebWaterPaintStore.WebApi.Endpoints
                 .WithName("DeleteProduct")
                 .Produces(204)
                 .Produces(404);
+
 
             #endregion
 
@@ -167,7 +167,7 @@ namespace WebWaterPaintStore.WebApi.Endpoints
 
             await storeRepo.AddOrUpdateProductAsync(product);
 
-            return Results.Ok(ApiResponse.Success(mapper.Map<ProductItem>(product), HttpStatusCode.Created));
+            return Results.Ok(ApiResponse.Success(mapper.Map<ProductDetail>(product), HttpStatusCode.Created));
         }
 
         private static async Task<IResult> UpdateProduct(
@@ -267,13 +267,12 @@ namespace WebWaterPaintStore.WebApi.Endpoints
             await _media.DeleteFileAsync(oldProduct.ImageUrl);
 
             return await storeRepo.DeleteProductByIdAsync(id)
-                ? Results.Ok(ApiResponse.Success(HttpStatusCode.NoContent))
+                ? Results.Ok(ApiResponse.Success("Sản phẩm đã được xóa", HttpStatusCode.NoContent))
                 : Results.Ok(ApiResponse.Fail(
                     HttpStatusCode.NotFound,
                     $"Không tìm thấy sản phẩm với id: `{id}`"));
 
         }
-
 
         #endregion
 
@@ -311,6 +310,8 @@ namespace WebWaterPaintStore.WebApi.Endpoints
                 ? Results.Ok(ApiResponse.Success(unitDetail))
                 : Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Không tìm thấy loại sản phẩm với tên loại: `{tag}`"));
         }
+
+
 
         #endregion
 
