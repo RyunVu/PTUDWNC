@@ -16,8 +16,8 @@ export default function ProductEdit() {
         id: 0,
         name: '',
         shortDescription: '',
-        urlSlug: '',
         meta: '',
+        urlSlug: '',
         actived: false,
         imageUrl: '',
         categoryId: 0,
@@ -44,8 +44,8 @@ export default function ProductEdit() {
                     id,
                     name: product.name,
                     shortDescription: product.shortDescription,
-                    urlSlug: product.urlSlug,
                     meta: product.meta,
+                    urlSlug: product.urlSlug,
                     actived: product.actived,
                     imageUrl: product.imageUrl,
                     categoryId: product.category.id,
@@ -57,11 +57,11 @@ export default function ProductEdit() {
                     id: 0,
                     name: product.name,
                     shortDescription: product.shortDescription,
-                    urlSlug: product.urlSlug,
                     meta: product.meta,
+                    urlSlug: product.urlSlug,
                     actived: product.actived,
                     imageUrl: product.imageUrl,
-                    categoryId: product.category.id,
+                    categoryId: product.categoryId,
                 };
                 const data = await createProduct(productData);
                 if (!data.isSuccess) isSuccess = false;
@@ -171,7 +171,7 @@ export default function ProductEdit() {
                             onChange={(e) =>
                                 setProduct({
                                     ...product,
-                                    metadata: e.target.value,
+                                    meta: e.target.value,
                                 })
                             }
                         />
@@ -179,12 +179,12 @@ export default function ProductEdit() {
                 </div>
 
                 <div className="row mb-3">
-                    <Form.Label className="col-sm-2 col-form-label">Loại sản phẩm</Form.Label>
+                    <Form.Label className="col-sm-2 col-form-label">Chủ đề</Form.Label>
                     <div className="col-sm-10">
                         <Form.Select
                             name="categoryId"
                             title="Category Id"
-                            value={product.category.id}
+                            value={product.categoryId}
                             required
                             onChange={(e) =>
                                 setProduct({
@@ -208,7 +208,7 @@ export default function ProductEdit() {
                     <div className="row mb-3">
                         <Form.Label className="col-sm-2 col-form-label">Hình hiện tại</Form.Label>
                         <div className="col-sm-10">
-                            <img src={process.env.REACT_APP_API_ROOT_URL + product.imageUrl} alt={product.title} />
+                            <img src={product.imageUrl} alt={product.name} width={'150px'} height={'180px'} />
                         </div>
                     </div>
                 )}
@@ -217,18 +217,38 @@ export default function ProductEdit() {
                     <div className="col-sm-10">
                         <Form.Control
                             type="file"
-                            name="imageFile"
+                            name="imageUrl"
                             accept="image/*"
-                            title="Image file"
+                            title="Image Url"
                             onChange={(e) => {
                                 setProduct({
                                     ...product,
-                                    imageFile: e.target.files[0],
+                                    imageUrl: e.target.files[0],
                                 });
                             }}
                         />
                     </div>
                 </div>
+
+                <div className="row mb-3">
+                    <Form.Label className="col-sm-2 col-form-label">Image URL</Form.Label>
+                    <div className="col-sm-10">
+                        <Form.Control
+                            type="text"
+                            name="imageUrl"
+                            title="ImageUrl"
+                            value={product.imageUrl || ''}
+                            onChange={(e) =>
+                                setProduct({
+                                    ...product,
+                                    imageUrl: e.target.value,
+                                })
+                            }
+                        />
+                    </div>
+                </div>
+                <Form.Control.Feedback type="invalid">Không được bỏ trống</Form.Control.Feedback>
+
                 <div className="row mb-3">
                     <div className="col-sm-10 offset-sm-2">
                         <div className="form-check">
