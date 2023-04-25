@@ -4,35 +4,36 @@ import { Button, Form } from 'react-bootstrap';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 
 // App's features
-import { isEmptyOrSpaces, decode, isInteger } from '../../../Utils/utils';
-import { createProduct, getProductById, updateProduct } from '../../../Services/products';
-import { getCategories } from '../../../Services/categories';
+import { decode, isInteger } from '../../../Utils/utils';
+import { createUnit, getUnitById, updateUnit, deleteUnitById } from '../../../Services/units';
 
-export default function UnitEdit() {
+const units = ['4kg', '5kg', '10kg', '20kg'];
+
+export default function ProductEdit() {
     // Hooks
     const navigate = useNavigate();
 
     const initialState = {
         id: 0,
-        name: '',
-        shortDescription: '',
-        urlSlug: '',
-        meta: '',
+        unitTag: '',
+        price: 0,
+        quantity: 0,
+        discount: 0,
+        soldCount: 0,
         actived: false,
-        imageUrl: '',
-        categoryId: 0,
-        category: {},
+        productId: 0,
     };
 
-    const [categories, setCategories] = useState([]);
-    const [product, setProduct] = useState(initialState);
+    const [unit, setUnit] = useState(initialState);
     const [validated, setValidated] = useState(false);
-
+    const { productId } = useParams();
     const { id } = useParams();
 
-    // Component's event handlers
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const decodedProductId = decodeURIComponent(productId);
+        const numericDecodedProductId = decodedProductId.slice(0, -1);
 
         if (e.currentTarget.checkValidity() === false) {
             e.stopPropagation();
@@ -40,56 +41,62 @@ export default function UnitEdit() {
         } else {
             let isSuccess = true;
             if (id > 0) {
-                const productData = {
+                const unitData = {
                     id,
-                    name: product.name,
-                    shortDescription: product.shortDescription,
-                    urlSlug: product.urlSlug,
-                    meta: product.meta,
-                    actived: product.actived,
-                    imageUrl: product.imageUrl,
-                    categoryId: product.category.id,
+                    unitTag: unit.unitTag,
+                    price: unit.price,
+                    quantity: unit.quantity,
+                    discount: unit.discount,
+                    soldCount: unit.soldCount,
+                    actived: unit.actived,
+                    productId: unit.productId,
                 };
-                const data = await updateProduct(id, productData);
+                const data = await updateUnit(id, unitData);
                 if (!data.isSuccess) isSuccess = false;
             } else {
-                const productData = {
+                const unitData = {
                     id: 0,
-                    name: product.name,
-                    shortDescription: product.shortDescription,
-                    urlSlug: product.urlSlug,
-                    meta: product.meta,
-                    actived: product.actived,
-                    imageUrl: product.imageUrl,
-                    categoryId: product.category.id,
+                    unitTag: unit.unitTag,
+                    price: unit.price,
+                    quantity: unit.quantity,
+                    discount: unit.discount,
+                    soldCount: unit.soldCount,
+                    actived: unit.actived,
+                    productId: numericDecodedProductId,
                 };
-                const data = await createProduct(productData);
+
+                const data = await createUnit(unitData);
                 if (!data.isSuccess) isSuccess = false;
             }
-            if (isSuccess) alert('Đã lưu thành công!');
-            else alert('Đã xảy ra lỗi!');
-            navigate('/admin/products');
+            if (isSuccess) {
+                alert('Đã lưu thành công!');
+                navigate('/admin/products');
+            } else alert('Đã xảy ra lỗi!');
+        }
+    };
+
+    const handleDeleteUnit = async (e) => {
+        if (window.confirm('Bạn có chắc muốn xóa sản phẩm?')) {
+            const data = await deleteUnitById(id);
+            if (data.isSuccess) {
+                alert(data.result);
+                navigate('/admin/products');
+            } else alert(data.errors[0]);
         }
     };
 
     useEffect(() => {
         document.title = 'Thêm/cập nhật sản phẩm';
 
-        fetchCategories();
-        fetchProduct();
+        fetchUnit();
 
-        async function fetchCategories() {
-            const data = await getCategories();
-            if (data) setCategories(data.items);
-            else setCategories([]);
-        }
-        async function fetchProduct() {
-            const data = await getProductById(id);
+        async function fetchUnit() {
+            const data = await getUnitById(id);
             if (data)
-                setProduct({
+                setUnit({
                     ...data,
                 });
-            else setProduct(initialState);
+            else setUnit(initialState);
         }
         // eslint-disable-next-line
     }, [id]);
@@ -98,137 +105,110 @@ export default function UnitEdit() {
 
     return (
         <>
-            <h1 className="px-4 py-3 text-danger">Thêm/cập nhật sản phẩm</h1>
+            <h1 className="px-4 py-3 text-danger">Thêm/cập nhật loại sản phẩm</h1>
             <Form className="mb-5 px-4" onSubmit={handleSubmit} noValidate validated={validated}>
-                <Form.Control type="hidden" name="id" value={product.id} />
+                <Form.Control type="hidden" name="id" value={unit.id} />
                 <div className="row mb-3">
-                    <Form.Label className="col-sm-2 col-form-label">Tiêu đề</Form.Label>
-                    <div className="col-sm-10">
-                        <Form.Control
-                            type="text"
-                            name="name"
-                            required
-                            value={product.name || ''}
-                            onChange={(e) =>
-                                setProduct({
-                                    ...product,
-                                    name: e.target.value,
-                                })
-                            }
-                        />
-                        <Form.Control.Feedback type="invalid">Không được bỏ trống</Form.Control.Feedback>
-                    </div>
-                </div>
-                <div className="row mb-3">
-                    <Form.Label className="col-sm-2 col-form-label">Slug</Form.Label>
-                    <div className="col-sm-10">
-                        <Form.Control
-                            type="text"
-                            name="urlSlug"
-                            title="Url slug"
-                            value={product.urlSlug || ''}
-                            onChange={(e) =>
-                                setProduct({
-                                    ...product,
-                                    urlSlug: e.target.value,
-                                })
-                            }
-                            required
-                        />
-                        <Form.Control.Feedback type="invalid">Không được bỏ trống</Form.Control.Feedback>
-                    </div>
-                </div>
-                <div className="row mb-3">
-                    <Form.Label className="col-sm-2 col-form-label">Giới thiệu</Form.Label>
-                    <div className="col-sm-10">
-                        <Form.Control
-                            as="textarea"
-                            type="text"
-                            rows={'10'}
-                            required
-                            name="shortDescription"
-                            title="Short description"
-                            value={decode(product.shortDescription || '')}
-                            onChange={(e) =>
-                                setProduct({
-                                    ...product,
-                                    shortDescription: e.target.value,
-                                })
-                            }
-                        />
-                        <Form.Control.Feedback type="invalid">Không được bỏ trống</Form.Control.Feedback>
-                    </div>
-                </div>
-
-                <div className="row mb-3">
-                    <Form.Label className="col-sm-2 col-form-label">Metadata</Form.Label>
-                    <div className="col-sm-10">
-                        <Form.Control
-                            type="text"
-                            name="meta"
-                            title="meta"
-                            value={decode(product.meta || '')}
-                            onChange={(e) =>
-                                setProduct({
-                                    ...product,
-                                    metadata: e.target.value,
-                                })
-                            }
-                        />
-                    </div>
-                </div>
-
-                <div className="row mb-3">
-                    <Form.Label className="col-sm-2 col-form-label">Loại sản phẩm</Form.Label>
+                    <Form.Label className="col-sm-2 col-form-label">Tên loại</Form.Label>
                     <div className="col-sm-10">
                         <Form.Select
-                            name="categoryId"
-                            title="Category Id"
-                            value={product.category.id}
+                            name="unitTag"
+                            title="Unit Tag"
+                            value={unit.unitTag}
                             required
                             onChange={(e) =>
-                                setProduct({
-                                    ...product,
-                                    categoryId: e.target.value,
+                                setUnit({
+                                    ...unit,
+                                    unitTag: e.target.value,
                                 })
                             }>
-                            <option value="">-- Chọn chủ đề --</option>
-                            {categories.length > 0 &&
-                                categories.map((category) => (
-                                    <option key={category.id} value={category.id}>
-                                        {category.name}
+                            <option value="">-- Chọn loại --</option>
+                            {units.length > 0 &&
+                                units.map((unit) => (
+                                    <option key={unit.unitTag} value={unit.unitTag}>
+                                        {unit}
                                     </option>
                                 ))}
                         </Form.Select>
                         <Form.Control.Feedback type="invalid">Không được bỏ trống</Form.Control.Feedback>
                     </div>
                 </div>
-
-                {!isEmptyOrSpaces(product.imageUrl) && (
-                    <div className="row mb-3">
-                        <Form.Label className="col-sm-2 col-form-label">Hình hiện tại</Form.Label>
-                        <div className="col-sm-10">
-                            <img src={process.env.REACT_APP_API_ROOT_URL + product.imageUrl} alt={product.title} />
-                        </div>
-                    </div>
-                )}
                 <div className="row mb-3">
-                    <Form.Label className="col-sm-2 col-form-label">Chọn hình ảnh</Form.Label>
+                    <Form.Label className="col-sm-2 col-form-label">Giá</Form.Label>
                     <div className="col-sm-10">
                         <Form.Control
-                            type="file"
-                            name="imageFile"
-                            accept="image/*"
-                            title="Image file"
-                            onChange={(e) => {
-                                setProduct({
-                                    ...product,
-                                    imageFile: e.target.files[0],
-                                });
-                            }}
+                            type="number"
+                            name="price"
+                            title="Price"
+                            value={unit.price || 0}
+                            onChange={(e) =>
+                                setUnit({
+                                    ...unit,
+                                    price: e.target.value,
+                                })
+                            }
+                            required
+                        />
+                        <Form.Control.Feedback type="invalid">Không được bỏ trống</Form.Control.Feedback>
+                    </div>
+                </div>
+                <div className="row mb-3">
+                    <Form.Label className="col-sm-2 col-form-label">Số lượng tồn</Form.Label>
+                    <div className="col-sm-10">
+                        <Form.Control
+                            type="number"
+                            name="quantity"
+                            title="Quantity"
+                            value={unit.quantity || 0}
+                            onChange={(e) =>
+                                setUnit({
+                                    ...unit,
+                                    quantity: e.target.value,
+                                })
+                            }
+                            required
+                        />
+                        <Form.Control.Feedback type="invalid">Không được bỏ trống</Form.Control.Feedback>
+                    </div>
+                </div>
+
+                <div className="row mb-3">
+                    <Form.Label className="col-sm-2 col-form-label">Giảm giá</Form.Label>
+                    <div className="col-sm-10">
+                        <Form.Control
+                            type="number"
+                            name="discount"
+                            title="Discount"
+                            value={decode(unit.discount || 0)}
+                            onChange={(e) =>
+                                setUnit({
+                                    ...unit,
+                                    discount: e.target.value,
+                                })
+                            }
                         />
                     </div>
                 </div>
+
+                <div className="row mb-3">
+                    <Form.Label className="col-sm-2 col-form-label">Số lượng đã bán</Form.Label>
+                    <div className="col-sm-10">
+                        <Form.Control
+                            disabled
+                            name="soldCount"
+                            title="Sold Count"
+                            value={unit.soldCount}
+                            required
+                            onChange={(e) =>
+                                setUnit({
+                                    ...unit,
+                                    soldCount: e.target.value,
+                                })
+                            }></Form.Control>
+                        <Form.Control.Feedback type="invalid">Không được bỏ trống</Form.Control.Feedback>
+                    </div>
+                </div>
+
                 <div className="row mb-3">
                     <div className="col-sm-10 offset-sm-2">
                         <div className="form-check">
@@ -236,11 +216,11 @@ export default function UnitEdit() {
                                 className="form-check-input"
                                 type="checkbox"
                                 name="actived"
-                                checked={product.actived}
+                                checked={unit.actived}
                                 title="Actived"
                                 onChange={(e) => {
-                                    setProduct({
-                                        ...product,
+                                    setUnit({
+                                        ...unit,
                                         actived: e.target.checked,
                                     });
                                 }}
@@ -253,9 +233,12 @@ export default function UnitEdit() {
                     <Button variant="primary" type="submit">
                         Lưu các thay đổi
                     </Button>
-                    <Link to="/admin/products" className="btn btn-danger ms-2">
+                    <Link to="/admin/products" className="btn btn-warning mx-2">
                         Hủy và quay lại
                     </Link>
+                    <Button variant="danger" onClick={handleDeleteUnit}>
+                        Xóa
+                    </Button>
                 </div>
             </Form>
         </>
