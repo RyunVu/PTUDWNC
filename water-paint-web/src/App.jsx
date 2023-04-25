@@ -11,7 +11,7 @@ import {
     AdminLayout,
     Categories,
     Products,
-    Units,
+    // Units,
     Accounts,
     ProductEdit,
     UnitEdit,
@@ -46,8 +46,8 @@ function App() {
                         <Route path="/admin/products/edit" element={<ProductEdit />} />
                         <Route path="/admin/products/edit/:id" element={<ProductEdit />} />
 
-                        <Route path="/admin/products/edit/:id/units/" element={<Units />} />
-                        <Route path="/admin/products/edit/:id/units" element={<UnitEdit />} />
+                        {/* <Route path="/admin/products/edit/:id/units" element={<Units />} /> */}
+                        <Route path="/admin/products/:productId/add/units" element={<UnitEdit />} />
                         <Route path="/admin/products/edit/:id/units/:id" element={<UnitEdit />} />
                     </Route>
 
