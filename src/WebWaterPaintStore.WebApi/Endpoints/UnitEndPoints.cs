@@ -37,15 +37,16 @@ namespace WebWaterPaintStore.WebApi.Endpoints
                 .Produces(400)
                 .Produces(409);
 
-            //routeGroupBuilder.MapGet("/ToggleActive/{id:int}", ToggleActiveStatus)
-            //    .WithName("ToggleUnitActiveStatus")
-            //    .Produces(204)
-            //    .Produces(404);
+            routeGroupBuilder.MapGet("/toggleUnit/{id:int}", ToggleUnitActiveStatus)
+                .WithName("ToggleUnitActivedStatus")
+                .Produces(204)
+                .Produces(404);
 
             routeGroupBuilder.MapDelete("/{id:int}", DeleteProductUnit)
                 .WithName("DeleteProductUnit")
                 .Produces(204)
                 .Produces(404);
+
 
             return app;
         }
@@ -130,23 +131,6 @@ namespace WebWaterPaintStore.WebApi.Endpoints
                 : Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, "Không tìm thấy sản phẩm"));
         }
 
-        //private static async Task<IResult> ToggleActiveStatus(
-        //    int id,
-        //    IStoreRepository storeRepo)
-        //{
-        //    var oldUnit = await storeRepo.GetUnitByIdAsync(id);
-
-        //    if (oldUnit == null)
-        //    {
-        //        return Results.Ok(ApiResponse.Fail(
-        //            HttpStatusCode.NotFound,
-        //            $"Không tìm thấy loại sản phẩm với id: `{id}`"));
-        //    }
-
-        //    await storeRepo.ToggleProductUnitActivedStatusAsync(id);
-        //    return Results.Ok(ApiResponse.Success("Toggle product active success"));
-        //}
-
         private static async Task<IResult> DeleteProductUnit(
             int id,
             IStoreRepository storeRepo)
@@ -171,6 +155,25 @@ namespace WebWaterPaintStore.WebApi.Endpoints
             var productDto = mapper.Map<ProductDto>(products);
 
             return Results.Ok(ApiResponse.Success(productDto));
+        }
+
+        private static async Task<IResult> ToggleUnitActiveStatus(
+            int id,
+            IStoreRepository storeRepo)
+        {
+
+            var oldUnit = await storeRepo.GetUnitByIdAsync(id);
+
+            if (oldUnit == null)
+            {
+                return Results.Ok(ApiResponse.Fail(
+                    HttpStatusCode.NotFound,
+                    $"Không tìm thấy sản phẩm với id: `{id}`"));
+            }
+
+            await storeRepo.ToggleProductUnitActivedStatusAsync(id);
+
+            return Results.Ok(ApiResponse.Success("Toggle product active success"));
         }
     }
 }
