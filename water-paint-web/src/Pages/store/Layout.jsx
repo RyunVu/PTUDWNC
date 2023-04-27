@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
 import Navbar from '../../Components/store/Navbar';
-
+import Footer from '../../Components/store/Footer';
 import GlobalStyle from '../../Components/store/GlobalStyle';
 
 export default function Layout() {
@@ -10,6 +10,7 @@ export default function Layout() {
             <GlobalStyle>
                 <Navbar />
                 <Outlet />
+                <Footer />
             </GlobalStyle>
         </>
     );
