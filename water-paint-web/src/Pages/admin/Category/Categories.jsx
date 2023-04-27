@@ -11,6 +11,8 @@ import Loading from '../../../Components/store/Loading';
 import Pager from '../../../Components/store/Pager';
 import CategoryFilterPane from '../../../Components/admin/CategoryFilterPane';
 
+import styles from '../Layout/layout.module.scss';
+
 export default function Categories() {
     // Component's states
     const [pageNumber, setPageNumber] = useState(1);
@@ -62,7 +64,7 @@ export default function Categories() {
 
     return (
         <div className="mb-5">
-            <div className="text">Danh sách chủ đề</div>
+            <div className={styles.text}>Danh sách chủ đề</div>
             <CategoryFilterPane setKeyword={setKeyword} setActived={setActived} />
             {isLoading ? (
                 <Loading />

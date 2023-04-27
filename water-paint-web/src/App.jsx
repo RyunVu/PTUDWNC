@@ -7,6 +7,7 @@ import {
     StoreLayout,
     ContactPage,
     CategoryPage,
+    ActionPage,
     AdminHome,
     AdminLayout,
     Categories,
@@ -21,7 +22,7 @@ import {
 
 function App() {
     return (
-        <div>
+        <div className="container-custom">
             <Router>
                 <Routes>
                     <Route path="/" element={<StoreLayout />}>
@@ -29,6 +30,7 @@ function App() {
                         <Route path="store" element={<StoreHome />} />
                         <Route path="store/category" element={<CategoryPage />} />
                         <Route path="store/contact" element={<ContactPage />} />
+                        <Route path="store/login" element={<ActionPage />} />
                     </Route>
 
                     <Route path="/admin" element={<AdminLayout />}>
