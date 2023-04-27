@@ -7,7 +7,6 @@ import {
     StoreLayout,
     ContactPage,
     CategoryPage,
-    ActionPage,
     AdminHome,
     AdminLayout,
     Categories,
@@ -20,6 +19,8 @@ import {
     CategoryEdit,
 } from './Pages';
 
+import { SignIn, ForgotPassword } from './Components/account';
+
 function App() {
     return (
         <div className="container-custom">
@@ -30,7 +31,8 @@ function App() {
                         <Route path="store" element={<StoreHome />} />
                         <Route path="store/category" element={<CategoryPage />} />
                         <Route path="store/contact" element={<ContactPage />} />
-                        <Route path="store/login" element={<ActionPage />} />
+                        <Route path="store/login" element={<SignIn />} />
+                        <Route path="store/forgetpassword" element={<ForgotPassword />} />
                     </Route>
 
                     <Route path="/admin" element={<AdminLayout />}>
