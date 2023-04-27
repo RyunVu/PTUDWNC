@@ -9,6 +9,8 @@ import Pager from '../../../Components/store/Pager';
 import Loading from '../../../Components/store/Loading';
 import ProductFilterPane from '../../../Components/admin/ProductFilterPane';
 
+import styles from '../Layout/layout.module.scss';
+
 export default function Products() {
     // Component's states
     const [pageNumber, setPageNumber] = useState(1);
@@ -71,7 +73,7 @@ export default function Products() {
 
     return (
         <div className="mb-5">
-            <div className="text">Danh sách sản phẩm</div>
+            <div className={styles.text}>Danh sách sản phẩm</div>
             <ProductFilterPane
                 setKeyword={setKeyword}
                 setCategoryId={setCategoryId}
