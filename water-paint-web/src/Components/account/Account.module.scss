@@ -13,6 +13,7 @@
 .textPH {
     font-weight: bold;
     margin: 0;
+    margin-top: 0.5rem;
 }
 
 .textSH {
@@ -36,6 +37,40 @@
     font-size: 14px;
     text-decoration: none;
     margin: 15px 0;
+}
+
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: #000;
+    color: #fff;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+}
+
+.instructions > svg {
+    margin-right: 0.25rem;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+
+.errmsg {
+    position: absolute;
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    width: 100%;
+    text-align: center;
+}
+
+.valid {
+    color: limegreen;
+    margin-left: 0.25rem;
 }
 
 .buttonStyle {
@@ -90,9 +125,9 @@
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     position: relative;
     overflow: hidden;
-    width: 768px;
+    width: 888px;
     max-width: 100%;
-    min-height: 480px;
+    min-height: 640px;
 }
 
 .formContainer {
