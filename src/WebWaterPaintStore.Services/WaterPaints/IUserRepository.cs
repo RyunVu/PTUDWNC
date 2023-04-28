@@ -12,5 +12,6 @@ namespace WebWaterPaintStore.Services.WaterPaints
         Task<Role> GetRoleByName(string role, CancellationToken cancellationToken = default);
 
         Task<bool> IsUserExistedAsync(string userName, CancellationToken cancellationToken = default);
+
     }
 }

@@ -14,6 +14,7 @@ namespace WebWaterPaintStore.Data.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
 
+
         public StoreDbContext(DbContextOptions<StoreDbContext> options) : base(options)
         {
 
