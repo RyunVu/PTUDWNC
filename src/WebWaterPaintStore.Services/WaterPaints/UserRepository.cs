@@ -35,7 +35,7 @@ namespace WebWaterPaintStore.Services.WaterPaints
             {
                 return await _dbContext.Set<User>().Include(r=>r.Roles).FirstOrDefaultAsync(r => r.Id == id,cancellationToken);
             }
-            return await _dbContext.Set<User>().FirstOrDefaultAsync(r =>r.Id == id,cancellationToken);
+            return await _dbContext.Set<User>().Include(r=>r.Roles).FirstOrDefaultAsync(r =>r.Id == id,cancellationToken);
         }
 
         public async Task<User> Register(User user, IEnumerable<int> roles, CancellationToken cancellationToken = default)
