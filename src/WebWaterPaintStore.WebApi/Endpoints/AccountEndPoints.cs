@@ -1,6 +1,7 @@
 ﻿using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using WebWaterPaintStore.Core.Entities;
 using WebWaterPaintStore.Services.WaterPaints;
 using WebWaterPaintStore.WebApi.Identities;
@@ -20,7 +21,10 @@ namespace WebWaterPaintStore.WebApi.Endpoints
             routeGroupBuilder.MapPost("/Register", Register)
                 .WithName("Register");
 
-            
+            routeGroupBuilder.MapGet("/GetProfile", GetProfile)
+                .WithName("GetProfile")
+                .RequireAuthorization()
+                .Produces<ApiResponse<UserDto>>();
 
             return app;
         }
@@ -70,6 +74,25 @@ namespace WebWaterPaintStore.WebApi.Endpoints
             var userDto = mapper.Map<UserDto>(newUser);
 
             return Results.Ok(userDto);
+        }
+
+        private static async Task<IResult> GetProfile(
+            HttpContext context,
+            [FromServices] IUserRepository userRepo,
+            [FromServices] IMapper mapper)
+        {
+            try
+            {
+                var identity = IdentityManager.GetCurrentUser(context);
+                var user = await userRepo.GetUserByIdAsync(identity.Id);
+                var userDto = mapper.Map<UserDto>(user);
+
+                return Results.Ok(ApiResponse.Success(userDto));
+            }
+            catch (Exception e)
+            {
+                return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, e.Message));
+            }
         }
       
     }
