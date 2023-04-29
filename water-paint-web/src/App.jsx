@@ -21,7 +21,6 @@ import {
 } from './Pages';
 
 import { SignIn, ForgotPassword } from './Components/account';
-import { useStore, actions } from './Utils';
 
 function App() {
     const [roles, setRoles] = useState([]);
@@ -36,14 +35,12 @@ function App() {
             })
                 .then((response) => response.json())
                 .then((responseToken) => {
-                    // console.log(responseToken.result.roles);
                     setRoles(responseToken.result.roles);
                 });
         }
         // eslint-disable-next-line
     }, []);
 
-    console.log(roles);
     return (
         <div className="container-custom">
             <Router>

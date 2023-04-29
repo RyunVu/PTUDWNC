@@ -1,5 +1,6 @@
 import { Navbar as Nb, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import NavRight from './UserAction';
 
 const Navbar = () => {
     return (
@@ -25,18 +26,7 @@ const Navbar = () => {
                             </Link>
                         </Nav.Item>
                     </Nav>
-                    <Nav className="mr-auto flex-grow-2">
-                        <Nav.Item>
-                            <Link to="/store/cart" className="nav-link text-dark">
-                                Giỏ hàng "thay bằng icon sau"
-                            </Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                            <Link to="/store/login" className="nav-link text-dark">
-                                Đăng nhập
-                            </Link>
-                        </Nav.Item>
-                    </Nav>
+                    <NavRight />
                 </Nb.Collapse>
             </div>
         </Nb>

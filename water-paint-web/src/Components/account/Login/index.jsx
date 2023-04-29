@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import styles from '../Account.module.scss';
@@ -29,9 +29,6 @@ export default function Account() {
     const errRef = useRef();
 
     // State componets
-
-    const [loginForm, setLoginForm] = useState({});
-    const [registerForm, setRegisterForm] = useState({});
 
     // UI
     const [toggled, setToggled] = useState(false);
@@ -121,7 +118,6 @@ export default function Account() {
     };
 
     // Login
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
@@ -135,8 +131,6 @@ export default function Account() {
         return true;
     };
 
-    const navigate = useNavigate();
-
     const handleLogin = async (e) => {
         e.preventDefault();
         if (validateSignIn()) {
@@ -149,7 +143,6 @@ export default function Account() {
             })
                 .then((response) => response.json())
                 .then((responseToken) => {
-                    console.log(responseToken.token);
                     if (responseToken.token) {
                         setToken('bearer ' + responseToken.token);
                     } else {
@@ -158,8 +151,6 @@ export default function Account() {
                 })
                 .catch((error) => {
                     console.error('Error:', error);
-                    setIsLoggedIn(false);
-                    setUser(null);
                 });
         }
     };
