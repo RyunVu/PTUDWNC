@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -14,6 +14,8 @@ const EMAIL_REGEX = /^[a-z0-9](\.?[a-z0-9]){0,}@g(oogle)?mail\.com$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 export default function Account() {
+    const navigate = useNavigate();
+
     const initialState = {
         id: 0,
         name: '',
@@ -153,6 +155,7 @@ export default function Account() {
                     console.error('Error:', error);
                 });
         }
+        navigate('/');
     };
 
     return (
