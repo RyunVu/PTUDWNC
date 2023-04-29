@@ -115,20 +115,20 @@ namespace WebWaterPaintStore.Data.Seeders
                 ShipAddress = "DLU",
                 ShipTel = "012345678",
                 Status = OrderStatus.New,
-                OrderDetails = new List<OrderDetail>()
-                {
-                    new ()
-                    {
-                        ProductId = products[0].Id,
-                        Quantity = 2,
-                        Discount = products[0].UnitDetails[0].Discount
-                    },new ()
-                    {
-                        ProductId = products[1].Id,
-                        Quantity = 3,
-                        Discount = products[1].UnitDetails[0].Discount
-                    },
-                }
+                //OrderDetails = new List<OrderDetail>()
+                //{
+                //    new ()
+                //    {
+                //        ProductId = products[0].Id,
+                //        Quantity = 2,
+                //        Discount = products[0].UnitDetails[0].Discount
+                //    },new ()
+                //    {
+                //        ProductId = products[1].Id,
+                //        Quantity = 3,
+                //        Discount = products[1].UnitDetails[0].Discount
+                //    },
+                //}
             }
         };
 

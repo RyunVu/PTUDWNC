@@ -38,7 +38,9 @@ namespace WebWaterPaintStore.Core.Entities
         public string Notes { get; set; }
 
            
-        
+        public int UserId { get; set; }
+
+        public User User { get; set; }
         // Properties
 
         // Chi tiết hóa đơn

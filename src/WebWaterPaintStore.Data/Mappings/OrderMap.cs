@@ -41,6 +41,9 @@ namespace WebWaterPaintStore.Data.Mappings
                 .HasConstraintName("FK_Orders_OrdersDetails")
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasOne(s => s.User)
+                .WithMany()
+                .HasForeignKey(s => s.UserId);
 
         }
     }
