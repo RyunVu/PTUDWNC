@@ -23,6 +23,10 @@ const AdminLayout = () => {
         setTheme(!theme);
     };
 
+    const handleLogout = () => {
+        localStorage.clear();
+    };
+
     return (
         <>
             <div className={theme ? clsx(styles.wrapper, styles.dark) : styles.wrapper}>
@@ -83,7 +87,7 @@ const AdminLayout = () => {
 
                             <div className={styles.bottomContent}>
                                 <li className="">
-                                    <Link to="/admin">
+                                    <Link to="/" onClick={handleLogout}>
                                         <BiLogOutCircle className={styles.icon} />
                                         <span className={clsx(styles.text, 'nav-text')}>Logout</span>
                                     </Link>
