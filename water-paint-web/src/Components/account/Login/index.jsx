@@ -13,11 +13,8 @@ const EMAIL_REGEX = /^[a-z0-9](\.?[a-z0-9]){0,}@g(oogle)?mail\.com$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 export default function Account() {
-    const navigate = useNavigate();
-
     // Ref componets
     const userRef = useRef();
-    const errRef = useRef();
 
     // State componets
 
@@ -99,17 +96,21 @@ export default function Account() {
     };
 
     // Login
+    const [errorMessage, setErrorMessage] = useState('');
+
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
 
     const { setToken } = useToken();
     const validateSignIn = () => {
         if (username === '' || password === '') {
-            setErrMsg('Vui lòng nhập đầy đủ thông tin tài khoản!');
+            setErrorMessage('Vui lòng nhập đầy đủ thông tin tài khoản!');
             return false;
         }
         return true;
     };
+
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -123,7 +124,7 @@ export default function Account() {
             })
                 .then((response) => {
                     if (response.status !== 200) {
-                        setErrMsg('Tài khoản hoặc mật khẩu sai!');
+                        setErrorMessage('Tài khoản hoặc mật khẩu sai!');
                         throw new Error('Invalid username or password');
                     }
                     return response.json();
@@ -131,10 +132,10 @@ export default function Account() {
                 .then((responseToken) => {
                     if (responseToken.token) {
                         setToken('bearer ' + responseToken.token);
-                        navigate('/');
                     } else {
-                        setErrMsg(responseToken.error_description);
+                        setErrorMessage(responseToken.error_description);
                     }
+                    navigate('/');
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -149,10 +150,8 @@ export default function Account() {
                 id="container">
                 {/*  register */}
                 <div className={clsx(styles.formContainer, styles.signUpContainer)}>
-                    <div className={errMsg ? styles.errmsg : styles.offscreen} ref={errRef}>
-                        {errMsg}
-                    </div>
                     <form action="#" className={styles.register} onSubmit={handleRegister}>
+                        {errMsg ? <div className="text-center text-danger">{errMsg}</div> : null}
                         <div className={clsx(styles.textPH, 'h1')}>Create Account</div>
 
                         <input
@@ -255,8 +254,8 @@ export default function Account() {
                 <div className={clsx(styles.formContainer, styles.signInContainer)}>
                     <form action="#" className={styles.login} onSubmit={handleLogin}>
                         <div className={clsx(styles.textPH, 'h1')}>Sign in</div>
+                        {errorMessage ? <div className="text-center text-danger">{errorMessage}</div> : null}
 
-                        {errMsg ? <div className="text-center text-danger">{errMsg}</div> : null}
                         <input
                             type="username"
                             placeholder="Username"
