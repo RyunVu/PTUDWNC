@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 import styles from '../Layout/layout.module.scss';
 import { FaUserAlt, FaUserFriends, FaStoreAlt } from 'react-icons/fa';
 import { SlNotebook } from 'react-icons/sl';
