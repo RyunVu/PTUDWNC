@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using WebWaterPaintStore.Core.Entities;
 using WebWaterPaintStore.Core.Identity;
 using WebWaterPaintStore.Data.Contexts;

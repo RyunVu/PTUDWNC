@@ -12,11 +12,8 @@ import {
     AdminLayout,
     Categories,
     Products,
-    // Units,
-    Accounts,
     ProductEdit,
     UnitEdit,
-    AccountEdit,
     CategoryEdit,
 } from './Pages';
 
@@ -57,10 +54,6 @@ function App() {
                     roles.some((role) => role.name === 'Manager') ? (
                         <Route path="/admin" element={<AdminLayout />}>
                             <Route path="/admin" element={<AdminHome />} />
-
-                            <Route path="/admin/accounts" element={<Accounts />} />
-                            <Route path="/admin/accounts/edit" element={<AccountEdit />} />
-                            <Route path="/admin/accounts/edit/:id" element={<AccountEdit />} />
 
                             <Route path="/admin/categories" element={<Categories />} />
                             <Route path="/admin/categories/edit" element={<CategoryEdit />} />

@@ -1,8 +1,10 @@
 ﻿using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using WebWaterPaintStore.Core.Entities;
+using WebWaterPaintStore.Core.Identity;
 using WebWaterPaintStore.Services.WaterPaints;
 using WebWaterPaintStore.WebApi.Identities;
 using WebWaterPaintStore.WebApi.Models;
@@ -10,6 +12,7 @@ using WebWaterPaintStore.WebApi.Models;
 namespace WebWaterPaintStore.WebApi.Endpoints
 {
     public static class AccountEndPoints{
+
         public static WebApplication MapAccountEndPoints(this WebApplication app)
         {
             var routeGroupBuilder = app.MapGroup("/api/account");
@@ -94,6 +97,31 @@ namespace WebWaterPaintStore.WebApi.Endpoints
                 return Results.Ok(ApiResponse.Fail(HttpStatusCode.BadRequest, e.Message));
             }
         }
-      
+
+        public bool UpdateUserRoles(ref User user, IEnumerable<Guid> selectRoles)
+        {
+            if (selectRoles == null) return false;
+
+            var roles = _dbContext.Roles.ToList();
+            var currentRoleNames = new HashSet<Guid>(user.Roles.Select(x => x.Id));
+
+            foreach (var role in roles)
+            {
+                if (selectRoles.ToList().Contains(role.Id))
+                {
+                    if (!currentRoleNames.ToList().Contains(role.Id))
+                    {
+                        user.Roles.Add(role);
+                    }
+                }
+                else if (currentRoleNames.ToList().Contains(role.Id))
+                {
+                    user.Roles.Remove(role);
+                }
+            }
+            return true;
+        }
+
+
     }
 }

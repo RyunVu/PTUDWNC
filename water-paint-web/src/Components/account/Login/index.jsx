@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import styles from '../Account.module.scss';
 import clsx from 'clsx';
 
-import { register } from '../../../Services/user';
 import { useToken } from '../../../Utils/hook';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -14,19 +13,8 @@ const EMAIL_REGEX = /^[a-z0-9](\.?[a-z0-9]){0,}@g(oogle)?mail\.com$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 export default function Account() {
-    const initialState = {
-        id: 0,
-        name: '',
-        email: '',
-        username: '',
-        password: '',
-        phone: '',
-        address: '',
-    };
-
     // Ref componets
     const userRef = useRef();
-    const errRef = useRef();
 
     // State componets
 
@@ -38,7 +26,6 @@ export default function Account() {
     };
 
     // Register
-    const [userRegister, setUserRegister] = useState(initialState);
 
     const [usernameR, setUser] = useState('');
     const [validName, setValidName] = useState(false);
@@ -53,7 +40,17 @@ export default function Account() {
     const [pwdFocus, setPwdFocus] = useState(false);
 
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [address, setAddress] = useState('');
+
+    const validateSignUp = () => {
+        if (usernameR === '' || pwd === '' || email === '') {
+            setErrMsg('Vui lòng nhập đầy đủ thông tin tài khoản!');
+            return false;
+        }
+        return true;
+    };
 
     useEffect(() => {
         userRef.current.focus();
@@ -77,48 +74,30 @@ export default function Account() {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        const v1 = USER_REGEX.test(usernameR);
-        const v2 = PWD_REGEX.test(pwd);
-        if (!v1 || !v2) {
-            setErrMsg('Invalid Entry');
-            return;
+        if (validateSignUp()) {
+            const data = {
+                name: name,
+                email: email,
+                password: pwd,
+                username: usernameR,
+                phone: phone,
+                address: address,
+                listRoles: [3],
+            };
+            fetch(`${process.env.REACT_APP_API_ENDPOINT}/account/Register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            }).then((response) => response.json());
         }
-
-        const userRegister = {
-            id: 0,
-            name: userRegister.name,
-            email: userRegister.email,
-            username: userRegister.username,
-            password: userRegister.password,
-            phone: userRegister.phone,
-            address: userRegister.address,
-        };
-
-        try {
-            const response = await register(userRegister, JSON.stringify({ usernameR, pwd }), {
-                headers: { 'Content-Type': 'application/json' },
-                withCredentials: true,
-            });
-            setSuccess(true);
-            //clear state and controlled inputs
-            //need value attrib on inputs for this
-            setUser('');
-            setPwd('');
-            setEmail('');
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No Server Response');
-            } else if (err.response?.status === 409) {
-                setErrMsg('Username Taken');
-            } else {
-                setErrMsg('Registration Failed');
-            }
-            errRef.current.focus();
-        }
+        window.location.reload();
     };
 
     // Login
     const [errorMessage, setErrorMessage] = useState('');
+
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
 
@@ -131,6 +110,8 @@ export default function Account() {
         return true;
     };
 
+    const navigate = useNavigate();
+
     const handleLogin = async (e) => {
         e.preventDefault();
         if (validateSignIn()) {
@@ -141,13 +122,20 @@ export default function Account() {
                     'Content-Type': 'application/json',
                 },
             })
-                .then((response) => response.json())
+                .then((response) => {
+                    if (response.status !== 200) {
+                        setErrorMessage('Tài khoản hoặc mật khẩu sai!');
+                        throw new Error('Invalid username or password');
+                    }
+                    return response.json();
+                })
                 .then((responseToken) => {
                     if (responseToken.token) {
                         setToken('bearer ' + responseToken.token);
                     } else {
                         setErrorMessage(responseToken.error_description);
                     }
+                    navigate('/');
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -162,24 +150,17 @@ export default function Account() {
                 id="container">
                 {/*  register */}
                 <div className={clsx(styles.formContainer, styles.signUpContainer)}>
-                    <div className={errMsg ? styles.errmsg : styles.offscreen} ref={errRef}>
-                        {errMsg}
-                    </div>
                     <form action="#" className={styles.register} onSubmit={handleRegister}>
+                        {errMsg ? <div className="text-center text-danger">{errMsg}</div> : null}
                         <div className={clsx(styles.textPH, 'h1')}>Create Account</div>
-                        <div className={styles.socialContainer}>
-                            <a href="#" className={styles.social}>
-                                <i className="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="#" className={styles.social}>
-                                <i className="fab fa-google-plus-g"></i>
-                            </a>
-                            <a href="#" className={styles.social}>
-                                <i className="fab fa-linkedin-in"></i>
-                            </a>
-                        </div>
-                        <span>or use your email for registration</span>
-                        <input type="text" placeholder="Name" className={styles.input} required />
+
+                        <input
+                            type="text"
+                            placeholder="Name"
+                            className={styles.input}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
 
                         <input
                             type="email"
@@ -245,8 +226,20 @@ export default function Account() {
                             <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
                         </p>
 
-                        <input type="text" placeholder="Phone" className={styles.input} required />
-                        <input type="text" placeholder="Address" className={styles.input} required />
+                        <input
+                            type="text"
+                            placeholder="Phone"
+                            className={styles.input}
+                            onChange={(e) => setPhone(e.target.value)}
+                            required
+                        />
+                        <input
+                            type="text"
+                            placeholder="Address"
+                            className={styles.input}
+                            onChange={(e) => setAddress(e.target.value)}
+                            required
+                        />
 
                         <button
                             type="submit"
@@ -259,21 +252,10 @@ export default function Account() {
 
                 {/* login */}
                 <div className={clsx(styles.formContainer, styles.signInContainer)}>
-                    {errorMessage ? <div className="text-center text-danger">{errorMessage}</div> : null}
                     <form action="#" className={styles.login} onSubmit={handleLogin}>
                         <div className={clsx(styles.textPH, 'h1')}>Sign in</div>
-                        <div className={styles.socialContainer}>
-                            <a href="#" className={styles.social}>
-                                <i className="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="#" className={styles.social}>
-                                <i className="fab fa-google-plus-g"></i>
-                            </a>
-                            <a href="#" className={styles.social}>
-                                <i className="fab fa-linkedin-in"></i>
-                            </a>
-                        </div>
-                        <div className={styles.inlineText}>or use your account</div>
+                        {errorMessage ? <div className="text-center text-danger">{errorMessage}</div> : null}
+
                         <input
                             type="username"
                             placeholder="Username"
@@ -327,6 +309,5 @@ export default function Account() {
                 </div>
             </div>
         </div>
-        // <div>index</div>
     );
 }

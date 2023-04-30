@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import { BsSun, BsMoon, BsPaintBucket } from 'react-icons/bs';
 import { BiLogOutCircle, BiHome } from 'react-icons/bi';
-import { AiOutlineDropbox, AiOutlineUser, AiOutlineRight } from 'react-icons/ai';
+import { AiOutlineDropbox, AiOutlineRight } from 'react-icons/ai';
 
 import profileImg from '../../../assets/images/avatar.jpg';
 
@@ -73,13 +73,6 @@ const AdminLayout = () => {
                                         <Link to="/admin/products">
                                             <BsPaintBucket className={styles.icon} />
                                             <span className={clsx(styles.text, 'nav-text')}>Sản phẩm</span>
-                                        </Link>
-                                    </li>
-
-                                    <li className="nav-link">
-                                        <Link to="/admin/accounts">
-                                            <AiOutlineUser className={styles.icon} />
-                                            <span className={clsx(styles.text, 'nav-text')}>Tài khoản</span>
                                         </Link>
                                     </li>
                                 </ul>
