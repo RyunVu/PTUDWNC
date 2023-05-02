@@ -2,18 +2,48 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     margin-bottom: 1.4rem;
+    padding-top: 2rem;
+    height: 100%;
+    border: 1px transparent solid;
+    transition: all ease 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        border-color: red;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+        .image {
+            transform: scale(1.12);
+        }
+
+        .name {
+            color: red;
+        }
+    }
 }
 
 .image {
     margin-bottom: 1rem;
     max-width: 100px;
+    transition: all ease 0.3s;
 }
 
 .name {
-   text-align: center;
-   font-size: 0.8rem;
-   line-height: 1.5;
-   padding: 0 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    padding: 0 1rem;
+    transition: all ease 0.3s;
+}
+
+.viewButton {
+    padding: 0.5rem 1.4rem;
+    cursor: pointer;
+    color: white;
+    background-color: red;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    margin-top: auto;
 }

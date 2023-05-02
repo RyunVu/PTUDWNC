@@ -1,6 +1,7 @@
 import {
     StoreHome,
     StoreShop,
+    StoreProductDetails,
     ContactPage,
     CategoryPage,
     AdminHome,
@@ -18,6 +19,7 @@ const publicRoutes = [
     { path: '/', component: StoreHome },
     { path: '/store', component: StoreShop },
     { path: '/store/category', component: CategoryPage },
+    { path: '/store/:id', component: StoreProductDetails },
     { path: '/store/contact', component: ContactPage },
 ];
 const privateRoute = [
