@@ -1,12 +1,15 @@
 import { Navbar as Nb, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import NavRight from './UserAction';
+import Logo from '../../assets/images/logo.png';
 
 const Navbar = () => {
     return (
         <Nb collapseOnSelect expand="sm" bg="white" variant="light" className="border-bottom shadow">
             <div className="container-fluid">
-                <Nb.Brand href="/">Logo sơn gì gì đó :v</Nb.Brand>
+                <Nb.Brand href="/">
+                    <img src={Logo} alt="logo" />
+                </Nb.Brand>
                 <Nb.Toggle aria-controls="responsive-navbar-nav" />
                 <Nb.Collapse id="responsive-navbar-nav" className="d-sm-inline-flex justify-content-between">
                     <Nav className="mr-auto flex-grow-1">
