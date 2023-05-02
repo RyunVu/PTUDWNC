@@ -8,29 +8,20 @@ function CategorySidebar() {
 
     useEffect(() => {
         getCategories().then((res) => {
-            if (res.items && res.items.length > 0)
-                setCategories(res.items);
+            if (res.items && res.items.length > 0) setCategories(res.items);
         });
     }, []);
-
-    console.log(categories);
 
     return (
         <Form>
             <h4 className={styles.heading}>DANH MỤC SẢN PHẨM</h4>
             <div className={styles.list}>
-                <div className={styles.item}>
-                    <Form.Check type="radio" label={`category`} id={1} />
-                </div>
-                <div className={styles.item}>
-                    <Form.Check type="radio" label={`category`} id={1} />
-                </div>
-                <div className={styles.item}>
-                    <Form.Check type="radio" label={`category`} id={1} />
-                </div>
-                <div className={styles.item}>
-                    <Form.Check type="radio" label={`category`} id={1} />
-                </div>
+                {categories &&
+                    categories.map((category) => (
+                        <div key={category.id} className={styles.item}>
+                            <Form.Check type="radio" label={category.name} id={category.id} />
+                        </div>
+                    ))}
             </div>
         </Form>
     );
