@@ -1,5 +1,5 @@
 .col {
-   padding-bottom: 1.4rem;
+    padding-bottom: 1.4rem;
 }
 
 .footer {
@@ -30,7 +30,7 @@
 .brandName {
     font-size: 1.2rem;
     font-weight: bold;
-    margin-top: 0.5rem;
+    margin-top: 0.8rem;
 }
 
 .address {
@@ -40,7 +40,7 @@
 
 .addressItem {
     display: flex;
-    align-items: start;
+    align-items: flex-start;
     font-size: 0.9rem;
 
     svg {
@@ -66,39 +66,40 @@
 .sendMail {
     display: flex;
     align-items: center;
+}
 
-    &Input {
-        flex: 1;
-        padding: 8px 10px;
-        border: none;
-        outline: none;
-    }
+.sendMailInput {
+    flex: 1;
+    padding: 8px 10px;
+    border: none;
+    outline: none;
+}
 
-    &Button {
-        width: 42px;
-        height: 42px;
-        margin-left: 2px;
-        border: 2px solid black;
-        background-color: red;
-        color: white;
-    }
+.sendMailButton {
+    width: 42px;
+    height: 42px;
+    margin-left: 2px;
+    border: 2px solid black;
+    background-color: red;
+    color: white;
 }
 
 .socialIcons {
     margin-top: 1rem;
+
     img {
         margin-right: 1rem;
     }
 }
 
 .divider {
-   height: 1px;
-   width: 100%;
-   background-color: #ffffff9a;
+    height: 1px;
+    width: 100%;
+    background-color: #ffffff9a;
 }
 
 .copyright {
-   text-align: center;
-   margin-top: 1.5rem;
-   font-size: 0.9rem;
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
 }
