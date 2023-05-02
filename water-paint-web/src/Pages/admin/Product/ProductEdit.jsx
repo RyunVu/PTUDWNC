@@ -75,22 +75,34 @@ export default function ProductEdit() {
     useEffect(() => {
         document.title = 'Thêm/cập nhật sản phẩm';
 
-        fetchCategories();
-        fetchProduct();
+        Promise.all([getCategories(), getProductById(id)]).then(([categories, product]) => {
+            if (
+                categories?.items &&
+                categories?.items.length > 0
+            )
+                setCategories(categories.items);
+            else
+                setCategories([]);
 
-        async function fetchCategories() {
-            const data = await getCategories();
-            if (data) setCategories(data.items);
-            else setCategories([]);
-        }
-        async function fetchProduct() {
-            const data = await getProductById(id);
-            if (data)
-                setProduct({
-                    ...data,
-                });
-            else setProduct(initialState);
-        }
+            if (product)
+                setProduct(product);
+            else
+                setProduct(initialState);
+        });
+
+        // async function fetchCategories() {
+        //     const data = await getCategories();
+        //     if (data) setCategories(data.items);
+        //     else setCategories([]);
+        // }
+        // async function fetchProduct() {
+        //     const data = await getProductById(id);
+        //     if (data)
+        //         setProduct({
+        //             ...data,
+        //         });
+        //     else setProduct(initialState);
+        // }
         // eslint-disable-next-line
     }, [id]);
 
@@ -184,7 +196,7 @@ export default function ProductEdit() {
                         <Form.Select
                             name="categoryId"
                             title="Category Id"
-                            value={product.categoryId}
+                            value={product.category.id}
                             required
                             onChange={(e) =>
                                 setProduct({
@@ -221,6 +233,7 @@ export default function ProductEdit() {
                             accept="image/*"
                             title="Image Url"
                             onChange={(e) => {
+                                console.log(e.target.files[0]);
                                 setProduct({
                                     ...product,
                                     imageUrl: e.target.files[0],
