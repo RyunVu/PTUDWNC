@@ -28,7 +28,7 @@ function Shop() {
     };
 
     return (
-        <div>
+        <>
             <TopPage title="SẢN PHẨM" />
 
             <Container className="mt-4 mb-4">
@@ -51,7 +51,7 @@ function Shop() {
                     </Col>
                 </Row>
             </Container>
-        </div>
+        </>
     );
 }
 

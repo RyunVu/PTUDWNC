@@ -1,9 +1,12 @@
 import styles from './ProductInShop.module.scss';
 import NoImagePaint from '../../../assets/images/NoImagePaint.jpg';
+import { useNavigate } from 'react-router-dom';
 
 function ProductInShop({ product = {} }) {
+    const navigate = useNavigate();
+
     return (
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper} onClick={() => navigate(`/store/${product.urlSlug}`)}>
             <img
                 className={styles.image}
                 src={
