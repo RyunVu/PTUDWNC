@@ -121,8 +121,9 @@ export default function Products() {
                                                 {product.unitDetails.map((item, index) => {
                                                     return (
                                                         <Link
+                                                            key={index}
                                                             to={`/admin/products/edit/${product.id}/units/${item.id}`}>
-                                                            <span key={index} className="btn btn-outline-primary mx-2">
+                                                            <span className="btn btn-outline-primary mx-2">
                                                                 {item.unitTag}
                                                             </span>
                                                         </Link>
