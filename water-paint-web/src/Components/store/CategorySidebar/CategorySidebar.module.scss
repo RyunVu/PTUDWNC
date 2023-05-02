@@ -1,0 +1,25 @@
+.heading {
+   font-size: 1rem;
+   font-weight: bold;
+   padding: 1rem 0.8rem;
+   background-color: #fd151df2;
+   color: white;
+   text-align: center;
+}
+
+.list {
+   padding: 1rem 0;
+   background-color: #FFF6F7;
+}
+
+.item {
+   padding: 0.6rem 2rem 0.4rem;
+   background-color: #FFF6F7;
+   font-size: 0.9rem;
+   transition: all ease 0.1s;
+   cursor: pointer;
+
+   &:hover {
+      background-color: #ffe6e9;
+   }
+}

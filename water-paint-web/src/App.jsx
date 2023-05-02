@@ -5,6 +5,7 @@ import {
     BadRequest,
     NotFound,
     StoreHome,
+    StoreShop,
     StoreLayout,
     ContactPage,
     CategoryPage,
@@ -44,7 +45,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<StoreLayout />}>
                         <Route path="/" element={<StoreHome />} />
-                        <Route path="store" element={<StoreHome />} />
+                        <Route path="store" element={<StoreShop />} />
                         <Route path="store/category" element={<CategoryPage />} />
                         <Route path="store/contact" element={<ContactPage />} />
                         <Route path="store/login" element={<SignIn />} />
