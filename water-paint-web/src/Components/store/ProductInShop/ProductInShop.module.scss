@@ -1,0 +1,19 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.4rem;
+}
+
+.image {
+    margin-bottom: 1rem;
+    max-width: 100px;
+}
+
+.name {
+   text-align: center;
+   font-size: 0.8rem;
+   line-height: 1.5;
+   padding: 0 1rem;
+}

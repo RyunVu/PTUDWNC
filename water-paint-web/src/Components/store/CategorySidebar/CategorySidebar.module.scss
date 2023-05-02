@@ -1,0 +1,29 @@
+.heading {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 1rem 0.8rem;
+    background-color: #fd151df2;
+    color: white;
+    text-align: center;
+}
+
+.list {
+    padding: 1rem 0;
+    background-color: #fff6f7;
+    user-select: none;
+}
+
+.item {
+    padding: 0.6rem 2rem 0.4rem;
+    background-color: #fff6f7;
+    font-size: 0.9rem;
+
+    label {
+        cursor: pointer;
+        transition: all ease 0.1s;
+
+        &:hover {
+            color: #ff142f;
+        }
+    }
+}

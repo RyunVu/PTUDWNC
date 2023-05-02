@@ -3,12 +3,12 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import { isEmptyOrSpaces } from '../../Utils/utils';
 
-const ProductItem = ({ productItem }) => {
-    let imageUrl = isEmptyOrSpaces(productItem.imageUrl)
+const ProductItem = ({ product = {} }) => {
+    let imageUrl = isEmptyOrSpaces(product.imageUrl)
         ? process.env.PUBLIC_URL + '/images/image_1.jpg'
-        : `${productItem.imageUrl}`;
+        : `${product.imageUrl}`;
 
-    let productDateString = new Date(productItem.postedDate).toDateString();
+    let productDateString = new Date(product.postedDate).toDateString();
 
     let postedDate = new Date(productDateString.slice(3, 15));
 
@@ -17,30 +17,30 @@ const ProductItem = ({ productItem }) => {
             <Card>
                 <div className="row g-0">
                     <div className="col-md-4">
-                        <Card.Img variant="top" src={imageUrl} alt={productItem.name} />
+                        <Card.Img variant="top" src={imageUrl} alt={product.name} />
                     </div>
                     <div className="col-md-8">
                         <Card.Body>
-                            <Card.Title>{productItem.title}</Card.Title>
+                            <Card.Title>{product.title}</Card.Title>
                             <Card.Text>
                                 <small className="text-muted">Chủ đề:</small>
                                 <Link
-                                    to={`/store/category/${productItem.category.urlSlug}`}
+                                    to={`/store/category/${product.category.urlSlug}`}
                                     className="text-primary text-decoration-none m-1">
-                                    {productItem.category.name}
+                                    {product.category.name}
                                 </Link>
                             </Card.Text>
-                            <Card.Text>{productItem.shortDescription}</Card.Text>
+                            <Card.Text>{product.shortDescription}</Card.Text>
                             <div className="tag-list">
-                                <UnitsList unitsList={productItem.unitsList} />
+                                <UnitsList unitsList={product.unitsList} />
                             </div>
                             <div className="text-end">
                                 <Link
                                     to={`/store/product/?year=${postedDate.getFullYear()}&month=${postedDate.getMonth()}&day=${postedDate.getDay()}&slug=${
-                                        productItem.urlSlug
+                                        product.urlSlug
                                     }`}
                                     className="btn btn-primary"
-                                    title={productItem.title}>
+                                    title={product.title}>
                                     Xem chi tiết
                                 </Link>
                             </div>

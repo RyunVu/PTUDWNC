@@ -23,7 +23,7 @@ const Navbar = () => {
                                     </Link>
                                 </Nav.Item>
                                 <Nav.Item>
-                                    <Link to="/store/category" className={`nav-link text-dark ${styles.navLink}`}>
+                                    <Link to="/store" className={`nav-link text-dark ${styles.navLink}`}>
                                         Sản phẩm
                                     </Link>
                                 </Nav.Item>
