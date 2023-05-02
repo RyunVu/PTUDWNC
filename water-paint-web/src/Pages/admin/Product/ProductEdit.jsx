@@ -75,22 +75,29 @@ export default function ProductEdit() {
     useEffect(() => {
         document.title = 'Thêm/cập nhật sản phẩm';
 
-        fetchCategories();
-        fetchProduct();
-
-        async function fetchCategories() {
-            const data = await getCategories();
-            if (data) setCategories(data.items);
+        Promise.all([getCategories(), getProductById(id)]).then(([categories, product]) => {
+            // Set categories
+            if (categories?.items && categories?.items.length > 0) setCategories(categories.items);
             else setCategories([]);
-        }
-        async function fetchProduct() {
-            const data = await getProductById(id);
-            if (data)
-                setProduct({
-                    ...data,
-                });
+
+            // Set product
+            if (product) setProduct(product);
             else setProduct(initialState);
-        }
+        });
+
+        // async function fetchCategories() {
+        //     const data = await getCategories();
+        //     if (data) setCategories(data.items);
+        //     else setCategories([]);
+        // }
+        // async function fetchProduct() {
+        //     const data = await getProductById(id);
+        //     if (data)
+        //         setProduct({
+        //             ...data,
+        //         });
+        //     else setProduct(initialState);
+        // }
         // eslint-disable-next-line
     }, [id]);
 
@@ -184,7 +191,7 @@ export default function ProductEdit() {
                         <Form.Select
                             name="categoryId"
                             title="Category Id"
-                            value={product.categoryId}
+                            value={product.categoryId ? product.categoryId : product.category.id}
                             required
                             onChange={(e) =>
                                 setProduct({
@@ -223,7 +230,7 @@ export default function ProductEdit() {
                             onChange={(e) => {
                                 setProduct({
                                     ...product,
-                                    imageUrl: e.target.files[0],
+                                    imageUrl: e.target.files[0].name,
                                 });
                             }}
                         />
