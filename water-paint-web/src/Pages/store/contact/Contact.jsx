@@ -65,7 +65,7 @@ const Contact = () => {
                         <button className="btn btn-primary send-button" id="submit" type="submit" value="SEND">
                             <div className="alt-send-button">
                                 <FontAwesomeIcon icon={faPaperPlane} />
-                                <span class="send-text">Gửi</span>
+                                <span className="send-text">Gửi</span>
                             </div>
                         </button>
                     </form>

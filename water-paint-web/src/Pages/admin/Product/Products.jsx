@@ -160,7 +160,7 @@ export default function Products() {
                                             </td>
                                             <td className="text-center">
                                                 <button
-                                                    class="btn btn-danger"
+                                                    className="btn btn-danger"
                                                     onClick={(e) => handleDeleteproduct(e, product.id)}>
                                                     Xóa
                                                 </button>
