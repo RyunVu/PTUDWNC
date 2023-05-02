@@ -76,18 +76,13 @@ export default function ProductEdit() {
         document.title = 'Thêm/cập nhật sản phẩm';
 
         Promise.all([getCategories(), getProductById(id)]).then(([categories, product]) => {
-            if (
-                categories?.items &&
-                categories?.items.length > 0
-            )
-                setCategories(categories.items);
-            else
-                setCategories([]);
+            // Set categories
+            if (categories?.items && categories?.items.length > 0) setCategories(categories.items);
+            else setCategories([]);
 
-            if (product)
-                setProduct(product);
-            else
-                setProduct(initialState);
+            // Set product
+            if (product) setProduct(product);
+            else setProduct(initialState);
         });
 
         // async function fetchCategories() {
@@ -196,7 +191,7 @@ export default function ProductEdit() {
                         <Form.Select
                             name="categoryId"
                             title="Category Id"
-                            value={product.category.id}
+                            value={product.categoryId ? product.categoryId : product.category.id}
                             required
                             onChange={(e) =>
                                 setProduct({
@@ -233,10 +228,9 @@ export default function ProductEdit() {
                             accept="image/*"
                             title="Image Url"
                             onChange={(e) => {
-                                console.log(e.target.files[0]);
                                 setProduct({
                                     ...product,
-                                    imageUrl: e.target.files[0],
+                                    imageUrl: e.target.files[0].name,
                                 });
                             }}
                         />
