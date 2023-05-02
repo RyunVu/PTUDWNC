@@ -7,13 +7,25 @@ function Banner() {
     return (
         <Carousel>
             <Carousel.Item interval={3000}>
-                <img className="d-block w-100" src={Banner1} alt="banner 1" />
+                <img
+                    className="d-block w-100"
+                    src={Banner1}
+                    alt="banner 1"
+                />
             </Carousel.Item>
             <Carousel.Item interval={3000}>
-                <img className="d-block w-100" src={Banner2} alt="banner 2" />
+                <img
+                    className="d-block w-100"
+                    src={Banner2}
+                    alt="banner 2"
+                />
             </Carousel.Item>
             <Carousel.Item interval={3000}>
-                <img className="d-block w-100" src={Banner3} alt="banner 3" />
+                <img
+                    className="d-block w-100"
+                    src={Banner3}
+                    alt="banner 3"
+                />
             </Carousel.Item>
         </Carousel>
     );
