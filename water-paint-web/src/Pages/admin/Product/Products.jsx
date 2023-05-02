@@ -9,6 +9,7 @@ import Pager from '../../../Components/store/Pager';
 import Loading from '../../../Components/store/Loading';
 import ProductFilterPane from '../../../Components/admin/ProductFilterPane';
 
+import NoImagePaint from '../../../assets/images/NoImagePaint.jpg';
 import styles from '../Layout/layout.module.scss';
 
 export default function Products() {
@@ -89,6 +90,7 @@ export default function Products() {
                     <Table striped responsive bordered>
                         <thead>
                             <tr>
+                                <th>Hình ảnh</th>
                                 <th>Tiêu đề</th>
                                 <th>Loại</th>
                                 <th>Còn hàng</th>
@@ -100,6 +102,15 @@ export default function Products() {
                                 products.map((product) => {
                                     return (
                                         <tr key={product.id}>
+                                            <td>
+                                                <img
+                                                    src={product.imageUrl ? product.imageUrl : NoImagePaint}
+                                                    alt="product"
+                                                    style={{
+                                                        width: '32px',
+                                                    }}
+                                                />
+                                            </td>
                                             <td>
                                                 <Link to={`/admin/products/edit/${product.id}`} className="text-bold">
                                                     {product.name}
