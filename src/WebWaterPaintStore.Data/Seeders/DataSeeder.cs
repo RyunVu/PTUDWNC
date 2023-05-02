@@ -30,7 +30,7 @@ namespace WebWaterPaintStore.Data.Seeders
             var categories = AddCategories();
             var products = AddProduct(categories);
             var units = AddUnit(products);
-            var orders = AddOrder(products);
+            //var orders = AddOrder(products);
 
             var roles = AddRoles();
             var users = AddUsers(roles);
@@ -94,48 +94,48 @@ namespace WebWaterPaintStore.Data.Seeders
         }
 
 
-        private IList<Order> AddOrder(IList<Product> products)
-        {
-            var orders = new List<Order>()
-        {
-            new ()
-            {
-                Email = "2014508@gmail.com",
-                ShipName = "NT Vũ",
-                OrderDate = DateTime.Now,
-                ShipAddress = "DLU",
-                ShipTel = "012345678",
-                Status = OrderStatus.New
-            },
-            new ()
-            {
-                Email = "2014508@gmail.com",
-                ShipName = "NT Vũ",
-                OrderDate = DateTime.Now,
-                ShipAddress = "DLU",
-                ShipTel = "012345678",
-                Status = OrderStatus.New,
-                //OrderDetails = new List<OrderDetail>()
-                //{
-                //    new ()
-                //    {
-                //        ProductId = products[0].Id,
-                //        Quantity = 2,
-                //        Discount = products[0].UnitDetails[0].Discount
-                //    },new ()
-                //    {
-                //        ProductId = products[1].Id,
-                //        Quantity = 3,
-                //        Discount = products[1].UnitDetails[0].Discount
-                //    },
-                //}
-            }
-        };
+        //private IList<Order> AddOrder(IList<Product> products)
+        //{
+        //    var orders = new List<Order>()
+        //{
+        //    new ()
+        //    {
+        //        Email = "2014508@gmail.com",
+        //        ShipName = "NT Vũ",
+        //        OrderDate = DateTime.Now,
+        //        ShipAddress = "DLU",
+        //        ShipTel = "012345678",
+        //        Status = OrderStatus.New
+        //    },
+        //    new ()
+        //    {
+        //        Email = "2014508@gmail.com",
+        //        ShipName = "NT Vũ",
+        //        OrderDate = DateTime.Now,
+        //        ShipAddress = "DLU",
+        //        ShipTel = "012345678",
+        //        Status = OrderStatus.New,
+        //        //OrderDetails = new List<OrderDetail>()
+        //        //{
+        //        //    new ()
+        //        //    {
+        //        //        ProductId = products[0].Id,
+        //        //        Quantity = 2,
+        //        //        Discount = products[0].UnitDetails[0].Discount
+        //        //    },new ()
+        //        //    {
+        //        //        ProductId = products[1].Id,
+        //        //        Quantity = 3,
+        //        //        Discount = products[1].UnitDetails[0].Discount
+        //        //    },
+        //        //}
+        //    }
+        //};
 
-            _dbContext.Orders.AddRange(orders);
-            _dbContext.SaveChanges();
-            return orders;
-        }
+        //    _dbContext.Orders.AddRange(orders);
+        //    _dbContext.SaveChanges();
+        //    return orders;
+        //}
 
 
 

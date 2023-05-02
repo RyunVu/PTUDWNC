@@ -98,30 +98,6 @@ namespace WebWaterPaintStore.WebApi.Endpoints
             }
         }
 
-        public bool UpdateUserRoles(ref User user, IEnumerable<Guid> selectRoles)
-        {
-            if (selectRoles == null) return false;
-
-            var roles = _dbContext.Roles.ToList();
-            var currentRoleNames = new HashSet<Guid>(user.Roles.Select(x => x.Id));
-
-            foreach (var role in roles)
-            {
-                if (selectRoles.ToList().Contains(role.Id))
-                {
-                    if (!currentRoleNames.ToList().Contains(role.Id))
-                    {
-                        user.Roles.Add(role);
-                    }
-                }
-                else if (currentRoleNames.ToList().Contains(role.Id))
-                {
-                    user.Roles.Remove(role);
-                }
-            }
-            return true;
-        }
-
 
     }
 }
