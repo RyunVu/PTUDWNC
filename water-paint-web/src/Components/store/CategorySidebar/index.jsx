@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import styles from './CategorySidebar.module.scss';
 import { getCategories } from '../../../Services/categories';
 
-function CategorySidebar() {
+function CategorySidebar({ onFilterByCategory }) {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
@@ -19,7 +19,13 @@ function CategorySidebar() {
                 {categories &&
                     categories.map((category) => (
                         <div key={category.id} className={styles.item}>
-                            <Form.Check type="radio" label={category.name} id={category.id} />
+                            <Form.Check
+                                name="category-select"
+                                type="radio"
+                                label={category.name}
+                                id={ category.id }
+                                onChange={() => onFilterByCategory(category.id)}
+                            />
                         </div>
                     ))}
             </div>
