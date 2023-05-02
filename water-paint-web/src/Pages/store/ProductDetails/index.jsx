@@ -27,15 +27,19 @@ function ProductDetails() {
     }, [slug]);
 
     const getPriceByUnit = (unitId) => {
+        let price = 0;
+
         if (product?.unitDetails) {
-            return product.unitDetails.find((unit) => unit.id === unitId)?.price ?? 0;
+            const unitFound = product.unitDetails.find((unit) => unit.id === unitId);
+            price = unitFound?.price ?? 0;
         }
 
-        return 0;
+        const priceLocale = price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
+        return priceLocale;
     };
 
-    const handleChoiceWeight = (unitId) => {
-        setUnitSelected(unitId);
+    const handleChoiceWeight = (unit) => {
+        setUnitSelected(unit);
     };
 
     return (
@@ -61,7 +65,7 @@ function ProductDetails() {
                             <div className={styles.info}>
                                 <h5 className={styles.name}>{product.name}</h5>
                                 <h5 className={styles.price}>
-                                    Giá: {getPriceByUnit(unitSelected ? unitSelected.id : 0)} VNĐ
+                                    Giá: {getPriceByUnit(unitSelected ? unitSelected.id : 0)}
                                 </h5>
                                 <p className={styles.weight}>Khối lượng:</p>
                                 <div className={styles.weightOptions}>
@@ -70,7 +74,7 @@ function ProductDetails() {
                                             <button
                                                 key={unit.id}
                                                 className={styles.weightOption}
-                                                onClick={() => handleChoiceWeight(unit.id)}>
+                                                onClick={() => handleChoiceWeight(unit)}>
                                                 {unit.unitTag}
                                             </button>
                                         ))

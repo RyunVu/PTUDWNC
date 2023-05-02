@@ -6,7 +6,7 @@ import ProductInShop from '../../Components/store/ProductInShop';
 
 function Home() {
     const [searchParams, setSearchParams] = useState({
-        PageSize: 10,
+        PageSize: 12,
         PageNumber: 1,
         Actived: true,
         SortOrder: 'DESC',
