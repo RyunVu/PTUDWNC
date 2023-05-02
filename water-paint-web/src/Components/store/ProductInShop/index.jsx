@@ -9,12 +9,12 @@ function ProductInShop({ product = {} }) {
                 src={
                     product.imageUrl
                         ? product.imageUrl
-                        : NoImagePaint
-                        // : 'https://cdn.nanoweb.vn/mediacenter/media/images/3005/products/3005/3596/s400_400/k871-v-1658472987.jpg'
+                        // : NoImagePaint
+                        : 'https://cdn.nanoweb.vn/mediacenter/media/images/3005/products/3005/3596/s400_400/k871-v-1658472987.jpg'
                 }
                 alt="product"
             />
-            <h4 className={styles.name}>{product.name}</h4>
+            <h4 className={ styles.name }>{ product.name }</h4>
         </div>
     );
 }

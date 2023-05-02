@@ -40,7 +40,7 @@ function Shop() {
                         <Row>
                             {products && products.length > 0 ? (
                                 products.map((product) => (
-                                    <Col key={product.id} xs={4}>
+                                    <Col key={product.id} xs={4} className='mb-2'>
                                         <ProductInShop product={product} />
                                     </Col>
                                 ))
