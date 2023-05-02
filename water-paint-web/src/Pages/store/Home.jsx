@@ -1,9 +1,9 @@
-import Banner from '../../Components/store/Banner';
+import Slider from '../../Components/store/Slider';
 
 function Home() {
     return (
         <div>
-            <Banner />
+            <Slider />
         </div>
     );
 }
