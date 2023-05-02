@@ -75,7 +75,7 @@ export default function Categories() {
                             <tr>
                                 <th>Chủ đề</th>
                                 <th>Hiện trên menu</th>
-                                <th>Số bài viết</th>
+                                <th>Số sản phẩm</th>
                                 <th>Xóa</th>
                             </tr>
                         </thead>
