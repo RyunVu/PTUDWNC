@@ -21,10 +21,17 @@ function Shop() {
     }, [searchParams]);
 
     const handleFilterByCategory = (categoryId) => {
-        setSearchParams((prevState) => ({
-            ...prevState,
-            CategoryId: categoryId,
-        }));
+        if (categoryId === -1) {
+            setSearchParams((prevState) => ({
+                ...prevState,
+                CategoryId: 0,
+            }));
+        } else {
+            setSearchParams((prevState) => ({
+                ...prevState,
+                CategoryId: categoryId,
+            }));
+        }
     };
 
     return (
@@ -40,7 +47,7 @@ function Shop() {
                         <Row>
                             {products && products.length > 0 ? (
                                 products.map((product) => (
-                                    <Col key={product.id} xs={4} className='mb-2'>
+                                    <Col key={product.id} xs={4} className="mb-2">
                                         <ProductInShop product={product} />
                                     </Col>
                                 ))

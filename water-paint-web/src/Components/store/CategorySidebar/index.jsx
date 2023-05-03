@@ -8,7 +8,7 @@ function CategorySidebar({ onFilterByCategory }) {
 
     useEffect(() => {
         getCategories().then((res) => {
-            if (res.items && res.items.length > 0) setCategories(res.items);
+            if (res.items && res.items.length > 0) setCategories([{ id: -1, name: 'Tất cả' }, ...res.items]);
         });
     }, []);
 

@@ -12,6 +12,7 @@ import InIcon from '../../../assets/icons/InIcon.png';
 import InstaIcon from '../../../assets/icons/InstaIcon.png';
 
 import styles from './Footer.module.scss';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
@@ -48,12 +49,10 @@ const Footer = () => {
                             Nhập email của bạn để được hỗ trợ nhanh nhất và nhận được những thông tin về khuyến mại sớm
                             nhất!
                         </p>
-                        <div className={styles.sendMail}>
-                            <input type="email" className={styles.sendMailInput} />
-                            <button className={styles.sendMailButton}>
-                                <FontAwesomeIcon icon={faPaperPlane} />
-                            </button>
-                        </div>
+                        <Link className={styles.sendMailButton} to='/store/contact'>
+                            Đăng ký ngay
+                            <FontAwesomeIcon icon={faPaperPlane} />
+                        </Link>
                         <div className={styles.socialIcons}>
                             <img src={FacebookIcon} alt="facebook" />
                             <img src={YoutubeIcon} alt="facebook" />
