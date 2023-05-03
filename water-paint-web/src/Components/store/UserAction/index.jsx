@@ -2,6 +2,8 @@ import React from 'react';
 import { useToken } from '../../../Utils';
 import { Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 export default function NavRight() {
     const { token, removeToken } = useToken();
@@ -16,10 +18,10 @@ export default function NavRight() {
                 ) : (
                     <>
                         <Link to="/store/cart" className="nav-link text-dark px-3">
-                            Giỏ hàng "thay bằng icon sau"
+                            Giỏ hàng <FontAwesomeIcon icon={faCartShopping} />
                         </Link>
                         <Link to="/store/login" className="nav-link text-dark px-2" onClick={removeToken}>
-                            Đăng xuất
+                            Đăng xuất <FontAwesomeIcon icon={faRightFromBracket} />
                         </Link>
                     </>
                 )}
