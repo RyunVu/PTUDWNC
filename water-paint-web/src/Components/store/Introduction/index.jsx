@@ -8,7 +8,7 @@ function Introduction() {
         <div>
             <h2 className={styles.header}>Thư ngỏ</h2>
             <h5 className={styles.subheader}>Kính gửi Quý khách hàng thân mến!</h5>
-            <div className={styles.top}>
+            <div className={`mb-3 ${styles.top}`}>
                 <p className={styles.para}>
                     &nbsp;&nbsp;&nbsp;&nbsp;Nếu được hỏi điều gì tạo nên sự khác biệt và là nền tảng trong hơn 20 năm
                     hình thành và phát triển của KOVA, thì đó chỉ có thể là "Nhà khoa học làm kinh doanh", khi chủ doanh
