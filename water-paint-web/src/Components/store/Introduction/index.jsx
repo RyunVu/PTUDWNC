@@ -5,29 +5,25 @@ import styles from './Introduction.module.scss';
 
 function Introduction() {
     return (
-        <Container className="mt-4 mb-4">
+        <div>
             <h2 className={styles.header}>Thư ngỏ</h2>
             <h5 className={styles.subheader}>Kính gửi Quý khách hàng thân mến!</h5>
-            <Row className="mb-2">
-                <Col xs={8}>
-                    <p className={styles.para}>
-                        &nbsp;&nbsp;&nbsp;&nbsp;Nếu được hỏi điều gì tạo nên sự khác biệt và là nền tảng trong hơn 20
-                        năm hình thành và phát triển của KOVA, thì đó chỉ có thể là "Nhà khoa học làm kinh doanh", khi
-                        chủ doanh nghiệp biến niềm đam mê và trách nhiệm của một nhà khoa học trở thành những thành tựu
-                        có ích và phục vụ lợi ích kinh tế cho cộng đồng và xã hội. Bắt nguồn từ khát vọng phi thường
-                        nhưng không thể viễn vông - "đưa thương hiệu sơn KOVA Việt Nam trở thành thương hiệu được công
-                        nhận trên thế giới" - thương hiệu KOVA cứ thế mà vượt qua bao khó khăn chỉ để khẳng định một
-                        điều duy nhất, chất lượng sản phẩm và những bước tiến đột phá trong tính năng sản phẩm. Đến nay
-                        KOVA tự hào trở thành thương hiệu có thể mang đến cho Quý khách hàng những sản phẩm sơn và vật
-                        liệu chống thấm có chất lượng ngang tầm, thậm chí vượt trội so với những nền công nghiệp sơn
-                        hàng đầu thế giới. Nguyên nhân chủ yếu là do sản phẩm của KOVA đã hoàn toàn nhiệt đới hóa - phù
-                        hợp với khí hậu nhiệt đới của Việt Nam và các nước trong khu vực.
-                    </p>
-                </Col>
-                <Col xs={4}>
-                    <img className={styles.image} src={IntroductionImage} alt="introduction" />
-                </Col>
-            </Row>
+            <div className={styles.top}>
+                <p className={styles.para}>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Nếu được hỏi điều gì tạo nên sự khác biệt và là nền tảng trong hơn 20 năm
+                    hình thành và phát triển của KOVA, thì đó chỉ có thể là "Nhà khoa học làm kinh doanh", khi chủ doanh
+                    nghiệp biến niềm đam mê và trách nhiệm của một nhà khoa học trở thành những thành tựu có ích và phục
+                    vụ lợi ích kinh tế cho cộng đồng và xã hội. Bắt nguồn từ khát vọng phi thường nhưng không thể viễn
+                    vông - "đưa thương hiệu sơn KOVA Việt Nam trở thành thương hiệu được công nhận trên thế giới" -
+                    thương hiệu KOVA cứ thế mà vượt qua bao khó khăn chỉ để khẳng định một điều duy nhất, chất lượng sản
+                    phẩm và những bước tiến đột phá trong tính năng sản phẩm. Đến nay KOVA tự hào trở thành thương hiệu
+                    có thể mang đến cho Quý khách hàng những sản phẩm sơn và vật liệu chống thấm có chất lượng ngang
+                    tầm, thậm chí vượt trội so với những nền công nghiệp sơn hàng đầu thế giới. Nguyên nhân chủ yếu là
+                    do sản phẩm của KOVA đã hoàn toàn nhiệt đới hóa - phù hợp với khí hậu nhiệt đới của Việt Nam và các
+                    nước trong khu vực.
+                </p>
+                <img className={styles.image} src={IntroductionImage} alt="introduction" />
+            </div>
             <p className={styles.para}>
                 &nbsp;&nbsp;&nbsp;&nbsp;Cho đến nay, Tập đoàn Sơn KOVA đã không ngừng lớn mạnh, khẳng định được vị thế
                 của mình trong lĩnh vực sơn và chống thấm ở thị trường trong nước cũng như quốc tế, đặc biệt là thị
@@ -51,7 +47,7 @@ function Introduction() {
                 <p className={styles.signatureGroup}>Chủ tịch Tập đoàn Sơn KOVA</p>
                 <p className={styles.chairperson}>PGS.TS Nguyễn Thị Hòe</p>
             </div>
-        </Container>
+        </div>
     );
 }
 

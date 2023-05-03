@@ -23,6 +23,16 @@
     margin-bottom: 1.5rem;
 }
 
+.top {
+    display: flex;
+    align-items: flex-start;
+}
+
+.image {
+    object-fit: contain;
+    margin-left: 1rem;
+}
+
 .signature {
     display: flex;
     align-items: flex-end;

@@ -5,25 +5,53 @@
     background-color: #fd151df2;
     color: white;
     text-align: center;
+    margin: 0;
 }
 
 .list {
-    padding: 1rem 0;
+    padding: 1.6rem 2rem;
     background-color: #fff6f7;
     user-select: none;
+    list-style: none;
 }
 
 .item {
-    padding: 0.6rem 2rem 0.4rem;
-    background-color: #fff6f7;
-    font-size: 0.9rem;
+    &+& {
+        margin-top: 1.6rem;
+    }
+}
 
-    label {
-        cursor: pointer;
-        transition: all ease 0.1s;
+.sublist {
+    padding-left: 1rem;
+    list-style: none;
+}
 
-        &:hover {
-            color: #ff142f;
-        }
+.firstItem {
+    display: flex;
+    align-items: flex-start;
+
+    img {
+        margin-right: 0.4rem;
+    }
+
+    span {
+        display: inline-block;
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: #4F4F4F;
+    }
+}
+
+.subitem {
+    display: flex;
+    margin: 10px 0;
+
+    img {
+        width: 25px;
+        height: 25px;
+    }
+
+    span {
+        font-size: 0.9rem;
     }
 }

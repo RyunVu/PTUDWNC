@@ -1,28 +1,63 @@
-import { useEffect, useState } from 'react';
-import { Form } from 'react-bootstrap';
 import styles from './ContactsSidebar.module.scss';
-import { getCategories } from '../../../Services/categories';
+import TelIcon from '../../../assets/icons/Tel.png';
+import TellIcon from '../../../assets/icons/Tell.png';
+import FaxIcon from '../../../assets/icons/Fax.png';
 
-function ContactsSidebar({ onFilterByCategory }) {
-    const [categories, setCategories] = useState([]);
-
-    useEffect(() => {
-        getCategories().then((res) => {
-            if (res.items && res.items.length > 0) setCategories([{ id: -1, name: 'Tất cả' }, ...res.items]);
-        });
-    }, []);
-
+function ContactsSidebar() {
     return (
-        <Form>
+        <div>
             <h4 className={styles.heading}>LIÊN HỆ</h4>
             <ul className={styles.list}>
-                <li>
-                    <div>
-                    VĂN PHÒNG CÔNG TY
+                <li className={styles.item}>
+                    <div className={styles.firstItem}>
+                        <img src={TellIcon} alt="tell" />
+                        <span>VĂN PHÒNG CÔNG TY</span>
                     </div>
+                    <ul className={styles.sublist}>
+                        <li className={styles.subitem}>
+                            <img src={TelIcon} alt="tel" />
+                            <span>024.3764.7750</span>
+                        </li>
+                        <li className={styles.subitem}>
+                            <img src={FaxIcon} alt="fax" />
+                            <span>024.3764.8035</span>
+                        </li>
+                    </ul>
+                </li>
+                <li className={styles.item}>
+                    <div className={styles.firstItem}>
+                        <img src={TellIcon} alt="tell" />
+                        <span>TRUNG TÂM TV & GT SẢN PHẨM</span>
+                    </div>
+                    <ul className={styles.sublist}>
+                        <li className={styles.subitem}>
+                            <img src={TelIcon} alt="tel" />
+                            <span>024.6287.3660</span>
+                        </li>
+                        <li className={styles.subitem}>
+                            <img src={FaxIcon} alt="fax" />
+                            <span>024.3795.7838</span>
+                        </li>
+                    </ul>
+                </li>
+                <li className={styles.item}>
+                    <div className={styles.firstItem}>
+                        <img src={TellIcon} alt="tell" />
+                        <span>KINH DOANH - MỞ ĐẠI LÝ</span>
+                    </div>
+                    <ul className={styles.sublist}>
+                        <li className={styles.subitem}>
+                            <img src={TelIcon} alt="tel" />
+                            <span>024.3212.3882</span>
+                        </li>
+                        <li className={styles.subitem}>
+                            <img src={FaxIcon} alt="fax" />
+                            <span>024.3212.3882</span>
+                        </li>
+                    </ul>
                 </li>
             </ul>
-        </Form>
+        </div>
     );
 }
 

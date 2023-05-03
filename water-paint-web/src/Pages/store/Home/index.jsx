@@ -5,6 +5,7 @@ import { getProductsByQueries } from '../../../Services/products';
 import ProductInShop from '../../../Components/store/ProductInShop';
 import Introduction from '../../../Components/store/Introduction';
 import styles from './Home.module.scss';
+import ContactsSidebar from '../../../Components/store/ContactsSidebar';
 
 function Home() {
     const [searchParams, setSearchParams] = useState({
@@ -26,12 +27,14 @@ function Home() {
         <div>
             <Slider />
             <div className={styles.introductionWrapper}>
-                <Container>
+                <Container className='mt-4 mb-4'>
                     <Row>
                         <Col xs={9}>
                             <Introduction />
                         </Col>
-                        <Col xs={3}></Col>
+                        <Col xs={ 3 }>
+                            <ContactsSidebar />
+                        </Col>
                     </Row>
                 </Container>
             </div>
