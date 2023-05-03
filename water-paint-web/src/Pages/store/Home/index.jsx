@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import Slider from '../../Components/store/Slider';
-import { getProductsByQueries } from '../../Services/products';
-import ProductInShop from '../../Components/store/ProductInShop';
+import Slider from '../../../Components/store/Slider';
+import { getProductsByQueries } from '../../../Services/products';
+import ProductInShop from '../../../Components/store/ProductInShop';
+import Introduction from '../../../Components/store/Introduction';
+import styles from './Home.module.scss';
 
 function Home() {
     const [searchParams, setSearchParams] = useState({
@@ -23,12 +25,26 @@ function Home() {
     return (
         <div>
             <Slider />
+            <div className={styles.introductionWrapper}>
+                <Container>
+                    <Row>
+                        <Col xs={9}>
+                            <Introduction />
+                        </Col>
+                        <Col xs={3}></Col>
+                    </Row>
+                </Container>
+            </div>
 
-            <h4 className='mt-5' style={ {
-                textAlign: 'center',
-                fontWeight: 'bold',
-                color: 'red'
-            }}>SẢN PHẨM MỚI NHẤT</h4>
+            <h4
+                className="mt-5"
+                style={{
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                    color: 'red',
+                }}>
+                SẢN PHẨM MỚI NHẤT
+            </h4>
             <Container className="mt-4 mb-4">
                 <Row>
                     {products && products.length > 0 ? (
