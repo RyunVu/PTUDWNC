@@ -3,9 +3,12 @@ import { Col, Container, Row } from 'react-bootstrap';
 import TopPage from '../../Components/store/TopPage';
 import CategorySidebar from '../../Components/store/CategorySidebar';
 import ProductInShop from '../../Components/store/ProductInShop';
-import { getProductsByQueries } from '../../Services/products';
+import { getProductsByKeyword, getProductsByQueries } from '../../Services/products';
+import ProductsFilter from '../../Components/store/ProductsFilter';
 
 function Shop() {
+    const [keyword, setKeyword] = useState('');
+
     const [searchParams, setSearchParams] = useState({
         PageSize: 10,
         PageNumber: 1,
@@ -15,10 +18,16 @@ function Shop() {
 
     useEffect(() => {
         const params = new URLSearchParams(searchParams);
-        getProductsByQueries(params).then((res) => {
-            if (res && res.items) setProducts(res.items);
-        });
-    }, [searchParams]);
+        if (keyword === '') {
+            getProductsByQueries(params).then((res) => {
+                if (res && res.items) setProducts(res.items);
+            });
+        } else {
+            getProductsByKeyword(keyword).then((res) => {
+                if (res && res.items) setProducts(res.items);
+            });
+        }
+    }, [keyword, searchParams]);
 
     const handleFilterByCategory = (categoryId) => {
         if (categoryId === -1) {
@@ -37,10 +46,10 @@ function Shop() {
     return (
         <>
             <TopPage title="SẢN PHẨM" />
-
             <Container className="mt-4 mb-4">
                 <Row>
                     <Col xs={3}>
+                        <ProductsFilter setKeyword={setKeyword} />
                         <CategorySidebar onFilterByCategory={handleFilterByCategory} />
                     </Col>
                     <Col xs={9}>
