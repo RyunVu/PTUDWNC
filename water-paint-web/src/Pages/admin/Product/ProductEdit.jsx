@@ -166,7 +166,6 @@ export default function ProductEdit() {
                         <Form.Control.Feedback type="invalid">Không được bỏ trống</Form.Control.Feedback>
                     </div>
                 </div>
-
                 <div className="row mb-3">
                     <Form.Label className="col-sm-2 col-form-label">Metadata</Form.Label>
                     <div className="col-sm-10">
@@ -184,7 +183,6 @@ export default function ProductEdit() {
                         />
                     </div>
                 </div>
-
                 <div className="row mb-3">
                     <Form.Label className="col-sm-2 col-form-label">Chủ đề</Form.Label>
                     <div className="col-sm-10">
@@ -210,7 +208,6 @@ export default function ProductEdit() {
                         <Form.Control.Feedback type="invalid">Không được bỏ trống</Form.Control.Feedback>
                     </div>
                 </div>
-
                 {!isEmptyOrSpaces(product.imageUrl) && (
                     <div className="row mb-3">
                         <Form.Label className="col-sm-2 col-form-label">Hình hiện tại</Form.Label>
@@ -228,15 +225,15 @@ export default function ProductEdit() {
                             accept="image/*"
                             title="Image Url"
                             onChange={(e) => {
+                                const files = e.target.files[0];
                                 setProduct({
                                     ...product,
-                                    imageUrl: e.target.files[0].name,
+                                    imageUrl: URL.createObjectURL(files),
                                 });
                             }}
                         />
                     </div>
                 </div>
-
                 <div className="row mb-3">
                     <Form.Label className="col-sm-2 col-form-label">Image URL</Form.Label>
                     <div className="col-sm-10">
@@ -255,7 +252,6 @@ export default function ProductEdit() {
                     </div>
                 </div>
                 <Form.Control.Feedback type="invalid">Không được bỏ trống</Form.Control.Feedback>
-
                 <div className="row mb-3">
                     <div className="col-sm-10 offset-sm-2">
                         <div className="form-check">

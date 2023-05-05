@@ -131,11 +131,12 @@ export default function Account() {
                 })
                 .then((responseToken) => {
                     if (responseToken.token) {
+                        console.log(responseToken.token);
                         setToken('bearer ' + responseToken.token);
+                        navigate('/');
                     } else {
                         setErrorMessage(responseToken.error_description);
                     }
-                    navigate('/');
                 })
                 .catch((error) => {
                     console.error('Error:', error);

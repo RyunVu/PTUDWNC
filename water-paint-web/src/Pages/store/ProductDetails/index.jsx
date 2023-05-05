@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getProductsByQueries } from '../../../Services/products';
 import { useParams } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
-import NoImagePaint from '../../../assets/images/NoImagePaint.jpg';
+// import NoImagePaint from '../../../assets/images/NoImagePaint.jpg';
 import styles from './ProductDetails.module.scss';
 import TopPage from '../../../Components/store/TopPage';
 
