@@ -96,6 +96,7 @@ namespace WebWaterPaintStore.Services.WaterPaints
         public async Task<bool> DeleteProductByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             return await _dbContext.Set<Product>()
+                .Include(u => u.UnitDetails)
                 .Where(p => p.Id.Equals(id))
                 .ExecuteDeleteAsync(cancellationToken) > 0;
         }
@@ -105,6 +106,12 @@ namespace WebWaterPaintStore.Services.WaterPaints
             if (_dbContext.Set<Product>().Any(p => p.Id.Equals(product.Id)))
             {
                 _dbContext.Entry(product).State = EntityState.Modified;
+                _dbContext.Entry(product).Collection(p => p.UnitDetails).Load();
+                foreach (var unit in product.UnitDetails)
+                {
+                    _dbContext.Entry(unit).State = EntityState.Modified;
+                    _dbContext.Entry(unit).Property(t => t.ProductId).IsModified = false;
+                }
             }
             else
             {
