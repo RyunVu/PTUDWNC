@@ -36,3 +36,12 @@ export async function toggleProductActivedStatus(id) {
     console.log(data);
     return data;
 }
+
+export async function getProductsByKeyword(keyword) {
+    const { data } = await axios.get(
+        `${process.env.REACT_APP_API_ENDPOINT}/product?Actived=false&PageNumber=1&PageSize=10&Keyword=${keyword}`,
+    );
+
+    if (data.isSuccess) return data.result;
+    else return null;
+}

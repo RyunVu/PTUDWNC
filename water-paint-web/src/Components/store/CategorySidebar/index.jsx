@@ -23,7 +23,7 @@ function CategorySidebar({ onFilterByCategory }) {
                                 name="category-select"
                                 type="radio"
                                 label={category.name}
-                                id={ category.id }
+                                id={category.id}
                                 onChange={() => onFilterByCategory(category.id)}
                             />
                         </div>
